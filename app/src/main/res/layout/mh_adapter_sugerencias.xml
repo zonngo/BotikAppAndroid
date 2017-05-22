@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+
+    android:layout_height="50dp">
+    <!--    android:alpha="0.8"-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:text="dfsdfsdg"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:id="@+id/textItem"
+                android:textColor="@color/wallet_bright_foreground_holo_light" />
+            <TextView
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:id="@+id/textItem2"
+                android:textColor="@color/wallet_bright_foreground_holo_light" />
+            <ImageView
+                android:layout_marginTop="8dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/icono_flecha_search"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/wallet_bright_foreground_holo_light"/>
+    </LinearLayout>
+
+
+</LinearLayout>

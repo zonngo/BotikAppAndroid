@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--BARRA DE BUSQUEDA-->
+    <item android:id="@+id/menu_toolbar_search"
+        android:title="Buscar"
+        android:icon="@drawable/nueva_lupa_menu"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
+    <!--item android:id="@+id/menu_toolbar_sign_off"
+        android:title="@string/sign_off"
+        app:showAsAction="never"
+
+        android:visible="true"/-->
+</menu>

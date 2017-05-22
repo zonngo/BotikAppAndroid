@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:padding="5dp"
+    android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:gravity="center_horizontal|center_vertical">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="1dp"
+                android:src="@drawable/imagengenericafarmacia" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.70"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="start">
+            <TextView
+                android:id="@+id/txtProducto"
+                android:textSize="12sp"
+                android:text="Producto:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/txtCosto"
+                android:textSize="12sp"
+                android:text="Costo:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+
+            <TextView
+                android:id="@+id/txtVendedor"
+                android:textSize="12sp"
+                android:text="Vendedor: "
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical">
+            <!--ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/corazonazul"
+                android:id="@+id/FavoriteButton"
+                /-->
+            <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="false"
+                app:mfb_padding="6"
+                app:mfb_favorite_image="@drawable/ic_favorite_white_48dp"
+                app:mfb_not_favorite_image="@drawable/ic_favorite_border_white_48dp"
+                app:mfb_rotation_duration="400"
+                app:mfb_rotation_angle="360"
+                app:mfb_bounce_duration="300"
+
+                android:id="@+id/FavoriteButton" />
+        </LinearLayout>
+    <!--
+                    app:mfb_favorite_image="@drawable/corazonazul"
+                app:mfb_not_favorite_image="@drawable/corazonblueoff"
+    app:mfb_color="black"
+                app:mfb_type="heart"-->
+
+</LinearLayout>

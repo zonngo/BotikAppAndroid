@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">ZonngoApp</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_principal__barra__lateral">Principal_Barra_Lateral</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="text_listadodefarmacias"><u>LISTADO DE FARMACIAS</u></string>
+
+    <string name="busqueda_farmacos">Buscar Farmaco</string>
+
+
+    <string name="msg_notify">"Tiene nueva(s) notificaciones"</string>
+    <string name="title_notify">"ZONNGO"</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_barra__lateral">Barra_Lateral</string>
+    <string name="title_activity_nueva">Nueva</string>
+    <string name="title_activity_nueva2">Nueva2</string>
+    <string name="title_activity_actividad_principal">Actividad_principal</string>
+    <string name="title_activity_myintroapp_zonngo">MyintroappZonngo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mh_url_sonngo">https://api.zonngo.com/v1.0/</string>
+
+    <string name="aceptar">ACEPTAR</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="gps_config">Conf. GPS</string>
+    <string name="gps_off">Debe de activar el GPS para encontrar su dirección actual.</string>
+    <string name="logout_title">CERRAR SESIÓN</string>
+    <string name="confirm_logout">Desea cerrar su sesión?</string>
+    <string name="cancel">Cancel</string>
+    <string name="gps_off_permission">Disculpe, debe ceder los permisos de GPS para continuar.</string>
+    <string name="gps_fail">Disculpe, no se pudo hallar las coordenadas GPS. Espere un momento y vuelva a intentarlo</string>
+    <string name="settings">AJUSTES</string>
+</resources>

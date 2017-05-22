@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFF</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#45afe0</color>
+    <color name="colorAzul">#45afe0</color>
+    <color name="colorModal">#e2e5e6</color>
+
+    <color name="colorTransparent">#00ffffff</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorNotification">#c0474747</color>
+    <color name="colorNewNotification">#D8D8D8</color>
+    <color name="colorNull">#00ffffff</color>
+
+    <color name="colorClientGray">#a7a7a7</color>
+
+    <color name="gris_semitransparente_light">#4d474747</color>
+    <color name="gris_semitransparente_dark">#B0000000</color>
+
+    <array name="array_dot_active">
+        <item>@color/gris_semitransparente_dark</item>
+        <item>@color/gris_semitransparente_dark</item>
+        <item>@color/gris_semitransparente_dark</item>
+        <item>@color/gris_semitransparente_dark</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/gris_semitransparente_light</item>
+        <item>@color/gris_semitransparente_light</item>
+        <item>@color/gris_semitransparente_light</item>
+        <item>@color/gris_semitransparente_light</item>
+    </array>
+</resources>

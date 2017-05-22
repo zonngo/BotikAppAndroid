@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/presentacion_2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAzul">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:alpha="0.2"
+            android:src="@drawable/img_presentacion_2" />
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/myLayout">
+
+                <ImageView
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/logo_zonngo_white" />
+
+                <TextView
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textAlignment="center"
+                    android:text="Lo mejor para ti"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_marginTop="40dp"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="60dp"
+                    android:paddingRight="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="El uso de fármacos debe mostrarse como una cultura en el país."
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+        </LinearLayout>
+</FrameLayout>

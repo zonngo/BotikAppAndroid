@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navMenuLupa"
+            android:icon="@drawable/lupa_zonngo"
+            android:title="Buscar" />
+        <item
+            android:id="@+id/navMenuFavoritos"
+            android:icon="@drawable/ic_favorite_border_black_24dp"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/navMenuNotificaciones"
+            android:icon="@drawable/ic_flag_black_24dp"
+            android:title="Notificaciones" />
+
+        <item
+            android:id="@+id/navMenuUsuario"
+            android:icon="@drawable/ic_person_outline_black_24dp"
+            android:title="Datos Personales" />
+        <item
+            android:id="@+id/nav_share2"
+            android:icon="@drawable/ic_share_black_24dp"
+            android:title="Share" />
+
+    </group>
+
+    <item android:title="Settings">
+
+        <menu>
+            <item
+                android:id="@+id/salir"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Salir" />
+        </menu>
+    </item>
+
+
+
+</menu>

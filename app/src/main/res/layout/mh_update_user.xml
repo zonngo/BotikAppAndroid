@@ -1,0 +1,89 @@
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_Informacion_Usuario">
+
+                     <EditText
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:inputType="textCapWords"
+                         android:textColorHint="@color/colorAzul"
+                         android:hint="Nombre"
+                         android:textColor="@color/colorAzul"
+                         android:ems="15"
+                         android:id="@+id/editTNombre"
+                         android:layout_marginTop="66dp"
+                         android:layout_centerHorizontal="true" />
+
+                     <EditText
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:inputType="textCapWords"
+                         android:textColorHint="@color/colorAzul"
+                         android:hint="Apellido"
+                         android:textColor="@color/colorAzul"
+                         android:ems="15"
+                         android:layout_below="@+id/editTNombre"
+                         android:layout_alignRight="@+id/editTNombre"
+                         android:layout_alignEnd="@+id/editTNombre"
+                         android:id="@+id/editApellido" />
+
+                     <EditText
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:inputType="textEmailAddress"
+                         android:textColorHint="@color/colorAzul"
+                         android:hint="E-mail"
+                         android:editable="false"
+                         android:textColor="@color/colorAzul"
+                         android:ems="15"
+                         android:id="@+id/editEmail"
+                         android:layout_below="@+id/editApellido"
+                         android:layout_alignLeft="@+id/editPassword"
+                         android:layout_alignStart="@+id/editPassword" />
+
+                     <Button
+                         android:text="Actualizar Informacion"
+                         android:layout_width="170dp"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@+id/editPassword"
+                         android:textColor="@color/colorAzul"
+                         android:background="@drawable/bordesboton"
+                         android:layout_centerHorizontal="true"
+                         android:layout_marginTop="93dp"
+                         android:id="@+id/registar" />
+
+                     <EditText
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:inputType="textPassword"
+                         android:hint="Ingrese clave para actualizar"
+                         android:textColorHint="@color/colorAzul"
+                         android:ems="15"
+                         android:visibility="visible"
+                         android:id="@+id/editPassword"
+                         android:layout_below="@+id/editTelefono"
+                         android:layout_centerHorizontal="true" />
+
+                     <EditText
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:inputType="number"
+                         android:hint="Numero Telefonico"
+                         android:textColorHint="@color/colorAzul"
+                         android:textColor="@color/colorAzul"
+                         android:ems="15"
+                         android:layout_marginTop="10dp"
+                         android:id="@+id/editTelefono"
+                         android:layout_below="@+id/editEmail"
+                         android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
+
+
+
+
+
+

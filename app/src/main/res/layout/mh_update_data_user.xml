@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_marginBottom="0dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:weightSum="1"
+        android:id="@+id/myLayout">
+        <LinearLayout
+            android:id="@+id/layaut1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/txtNombreUpd"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:hint="Nombre"
+                            android:textSize="20sp"
+                            android:maxLines="1"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/editApellidoUpd"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:ems="10"
+                            android:hint="Apellido"
+                            android:textSize="20sp"
+                            android:maxLines="1"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <EditText
+                        android:id="@+id/txtEmailAddressUpd"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:enabled="false"
+                        android:ems="10"
+                        android:hint="E-mail"
+                        android:textSize="20sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/txtTelefonoUpd"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:ems="10"
+                        android:hint="Número telefónico"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/txtPwdAct"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:ems="10"
+                            android:hint="Clave actual"
+                            android:textSize="20sp"
+                            android:maxLines="1"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/txtPwdNext"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:ems="10"
+                            android:hint="Nueva clave (opcional)"
+                            android:textSize="20sp"
+                            android:maxLines="1"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <Button
+                android:text="Actualizar"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAzul"
+                android:background="@drawable/bordesboton"
+                android:onClick="onClick"
+                android:id="@+id/btnUpd" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

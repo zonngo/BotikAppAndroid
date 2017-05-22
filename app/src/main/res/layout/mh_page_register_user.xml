@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_marginBottom="0dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:weightSum="1"
+        android:id="@+id/myLayout">
+        <LinearLayout
+            android:id="@+id/layaut1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.88"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp">
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/logo_zonngo_new" />
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/txtNombre"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:ems="10"
+                            android:hint="Nombre"
+                            android:textSize="22sp"
+                            android:maxLines="1"
+                            android:nextFocusRight="@+id/txtApellido"
+                            android:imeOptions="actionNext"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/txtApellido"
+                            android:textColor="@color/colorAzul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapWords"
+                            android:ems="10"
+                            android:hint="Apellido"
+                            android:textSize="22sp"
+                            android:maxLines="1"
+                            android:layout_marginTop="15dp"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <EditText
+                        android:id="@+id/txtE_mail"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:ems="10"
+                        android:hint="E-mail"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/txtTelefonos"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:ems="10"
+                        android:hint="Número telefónico"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/txtPwd1"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:ems="10"
+                        android:hint="Crear clave"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:id="@+id/txtPwd2"
+                        android:textColor="@color/colorAzul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:ems="10"
+                        android:hint="Confirmar clave"
+                        android:textSize="22sp"
+                        android:maxLines="1"
+                        android:layout_marginTop="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_marginTop="16dp"
+                    android:text="Registrarme"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAzul"
+                    android:background="@drawable/bordesboton"
+                    android:onClick="onClick"
+                    android:id="@+id/btnRegistrar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.12">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:background="@drawable/login_buton"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textAlignment="center"
+                    android:text="Al registrarme declaro que; acepto los términos y condiciones de las políticas de privacidad de Zonngo"
+                    android:textColor="@color/colorAzul"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

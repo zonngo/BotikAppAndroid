@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/ContainerAll_ActMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include android:id="@+id/AppBarL_ActMenu" layout="@layout/mh_toolbar_activity"/>
+            <include android:id="@+id/SwipeRefreshL_ActMenu" layout="@layout/mh_view_pager"/>
+            <include android:id="@+id/RelativeBotomNavigView" layout="@layout/mh_bottom_navigation_view"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+
+        <include layout="@layout/mh_bottomsheet_filtro"/>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/mh_nav_header_actividad_principal"
+            app:menu="@menu/mh_drawer_activity_principal" />
+
+
+</android.support.v4.widget.DrawerLayout>
