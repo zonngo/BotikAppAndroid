@@ -44,12 +44,11 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBM9xs4EM-mfHfoxTwQjPF9RqcYLSdw-Ns" />
+            android:value="AIzaSyAgSyvM-bB_grjkCn0Zplm0xPjWPfx7Avw" />
 
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Login"
             android:windowSoftInputMode="stateAlwaysHidden">
-
         </activity>
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Principal"
@@ -63,10 +62,8 @@
         <activity android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Presentacion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

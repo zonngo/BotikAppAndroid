@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZonngoApp</string>
+    <string name="app_name">Botikapp</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_principal__barra__lateral">Principal_Barra_Lateral</string>
@@ -9,8 +9,6 @@
     <string name="text_listadodefarmacias"><u>LISTADO DE FARMACIAS</u></string>
 
     <string name="busqueda_farmacos">Buscar Farmaco</string>
-
-
     <string name="msg_notify">"Tiene nueva(s) notificaciones"</string>
     <string name="title_notify">"ZONNGO"</string>
     <string name="action_settings">Settings</string>
