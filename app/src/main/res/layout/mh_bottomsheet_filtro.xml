@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/pantallaazuldebusqueda"
                 android:orientation="vertical"
-                android:background="@color/colorAzul"
+                android:background="@color/colorVerde"
                 android:padding="16dp">
                 <LinearLayout
                     android:id="@+id/idAplicar"
@@ -33,7 +33,7 @@
                         android:background="@color/colorTransparent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_close_dark"/>
+                        android:src="@drawable/ic_dialog_close_dark"/>
                     <TextView
                         android:id="@+id/tvAplicar"
                         android:text="Aplicar"
@@ -126,7 +126,7 @@
                                         android:textOn=""
                                         android:textOff=""
                                         android:text=""
-                                        android:textColor="@color/colorAzul"
+                                        android:textColor="@color/colorVerde"
                                         android:background="@drawable/toggleb_generico_style" />
                                     <TextView
                                         android:layout_width="match_parent"

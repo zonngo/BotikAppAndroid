@@ -40,13 +40,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtEmail"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:ems="10"
-                        android:hint="E-mail"
-                        android:textSize="22sp"
+                        android:hint="Correo"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -56,13 +56,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtPass"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:ems="10"
                         android:hint="Ingresar clave"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -74,7 +74,7 @@
                 android:text="Ingresar"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAzul"
+                android:textColor="@color/colorWhite"
                 android:background="@drawable/bordesboton"
                 android:layout_marginTop="20dp"
                 android:onClick="onClick"
@@ -96,8 +96,8 @@
                     android:layout_gravity="end"
                     android:gravity="center_vertical"
                     android:text="¿Olvidó contraseña?"
-                    android:textColor="@color/colorAzul"
-                    android:textSize="14sp" />
+                    android:textColor="@color/colorVerde"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                     android:gravity="center_vertical"
                     android:text="Recuperar Contraseña"
                     android:textStyle="bold"
-                    android:textColor="@color/colorAzul"
+                    android:textColor="@color/colorVerde"
                     android:textSize="12sp"
                     android:layout_marginLeft="5dp"/>
             </LinearLayout>
@@ -137,7 +137,7 @@
                         android:layout_gravity="end"
                         android:gravity="center_vertical"
                         android:text="¿No tienes cuenta?"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorWhite"
                         android:textSize="13sp" />
 
                     <TextView
@@ -147,7 +147,7 @@
                         android:gravity="center_vertical"
                         android:text="Registrarse aquí"
                         android:textStyle="bold"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorWhite"
                         android:layout_marginLeft="5dp"
                         android:textSize="13sp" />
                 </LinearLayout>

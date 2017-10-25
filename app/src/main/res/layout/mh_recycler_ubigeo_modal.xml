@@ -55,7 +55,7 @@
             android:id="@+id/tvTitulo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/colorAzul"
+            android:textColor="@color/colorVerde"
             android:gravity="start|center_vertical"
             android:textSize="13sp"
             android:textStyle="normal"

@@ -2,6 +2,7 @@ package appzonngo.com.app.ismcenter.ZonngoApp.recovery;
 
 import android.app.AlertDialog;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -53,10 +54,27 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,29 +82,34 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import appzonngo.com.app.ismcenter.ZonngoApp.Http.HttpZonngo;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyGoogleApiActivity;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyNetWork;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Sesion.Preferences;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Constants;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Keyboard;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Ubigeo;
+import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.MyDialoges;
 import appzonngo.com.app.ismcenter.zonngo2.R;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Notificaciones;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyMaps;
+
+import static appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Presentacion.mGoogleApiClient;
 
 public class MH_Principal extends MyGoogleApiActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         BottomNavigationView.OnNavigationItemSelectedListener,
         ViewPagerEx.OnPageChangeListener,
         OnMapReadyCallback {
-
+    private String TAG = "MH_Activity_Present";
+    private static final int RC_SIGN_IN = 4546;
     static int PAGE_TOTAL=5;
     static int PAGE_MAIN=0;
-    static int PAGE_ENCONTRADOS=1;
+    public static int PAGE_ENCONTRADOS=1;
     static int PAGE_FAVORITE=2;
     static int PAGE_NOTIFICACIONES=3;
     static int PAGE_USER=4;
-
+    private CallbackManager callbackManager;
     final String LOG="MH_Principal";
     //Menu inferior
 
@@ -481,18 +504,18 @@ public class MH_Principal extends MyGoogleApiActivity implements
         searchView.setQueryHint(getResources().getString(R.string.busqueda_farmacos).concat("..."));
         //color para el place holder y texto
         EditText txtSerach=(EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        txtSerach.setHintTextColor(getResources().getColor(R.color.colorAzul));
+        txtSerach.setHintTextColor(getResources().getColor(R.color.colorVerde));
         txtSerach.setTextColor(Color.BLACK);
 
         // Configura el boton cancelar
         ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         //searchCloseIcon.setImageResource(R.drawable.ic_close_light);
-        searchCloseIcon.setColorFilter(getResources().getColor(R.color.colorAzul), PorterDuff.Mode.MULTIPLY);
+        searchCloseIcon.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         // Configura el boton aceptar
         searchView.setSubmitButtonEnabled(true);
         ImageView searchSubmit = (ImageView) searchView.findViewById (android.support.v7.appcompat.R.id.search_go_btn);
         searchSubmit.setImageResource(R.drawable.ic_filter_list_white_24dp);
-        searchSubmit.setColorFilter(getResources().getColor(R.color.colorAzul), PorterDuff.Mode.MULTIPLY);
+        searchSubmit.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         searchSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -506,7 +529,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
         // Configura el boton de busqueda
         ImageView searchButton = (ImageView) searchView.findViewById (android.support.v7.appcompat.R.id.search_button);
         searchButton.setImageResource(R.drawable.lupa_zonngo);
-        searchButton.setColorFilter(getResources().getColor(R.color.colorAzul), PorterDuff.Mode.MULTIPLY);
+        searchButton.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -828,7 +851,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
         file_maps.put("1", R.drawable.uno);
         file_maps.put("2", R.drawable.dos);
         file_maps.put("3", R.drawable.tres);
-        file_maps.put("4", R.drawable.cuatro);
+        //file_maps.put("4", R.drawable.cuatro);
 
         for (String name : file_maps.keySet()) {
 
@@ -880,7 +903,23 @@ public class MH_Principal extends MyGoogleApiActivity implements
         alertDialog.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                http.Logout(idSesion);
+                String typeLogin= Preferences.getTypeLogin(MH_Principal.this);
+                switch (typeLogin){
+                    case Preferences.LOGIN_EMAIL:
+                        http.Logout(idSesion);
+                        break;
+                    case Preferences.LOGIN_FACEBOOK:
+                        if(!FacebookSdk.isInitialized())
+                            FacebookSdk.sdkInitialize(getApplicationContext());
+                        disconnectFromFacebook(idSesion);
+                        break;
+                    case Preferences.LOGIN_GOOGLE:
+                        signOut();
+                        break;
+                }
+
+
+
             }
         });
         alertDialog.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
@@ -892,11 +931,110 @@ public class MH_Principal extends MyGoogleApiActivity implements
         alertDialog.show();
     }
 
+
+    private ProgressDialog loading;
+    public void disconnectFromFacebook(final String idSesion) {
+        loading = ProgressDialog.show(MH_Principal.this, "Cargando", "Por favor espere", false, false);
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Log.e("disconnectFromFacebook","AccessToken.getCurrentAccessToken() == null");
+            //http.Logout(idSesion);
+            loading.dismiss();
+            gotoPresentacion();
+            return; // already logged out
+
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                Log.e("disconnectFromFacebook","onCompleted");
+                LoginManager.getInstance().logOut();
+                loading.dismiss();
+
+                gotoPresentacion();
+            }
+        }).executeAsync();
+    }
+
+    @Override
+    protected void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        MyDialoges.dismissProgressDialog();
+    }
+    private void signIn() {
+        Log.e(TAG, "signIn()");
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    public void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                gotoPresentacion();
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.e("requed  code",String.valueOf(requestCode));
+        Log.e("resul  code",String.valueOf(resultCode));
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }else if(requestCode==64206){
+
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    protected void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            //LLAMAR EL API PARA SOLICITAR EL SSESION ID
+
+
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+
+        } else {
+            // Signed out, show unauthenticated UI.
+            /*updateUI(false);*/
+            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
+        }
+
+    }
+    private void gotoPresentacion(){
+        Preferences.logOutpPreferences(MH_Principal.this);
+        Intent salir = new Intent(getApplicationContext(), MH_Activity_Presentacion.class);
+        startActivity(salir);
+        finish();
+    }
+
+
     @Override
     protected void onDestroy() {
         //notifyON=false;
-        myTimer.cancel();
         super.onDestroy();
+        myTimer.cancel();
+        MyDialoges.dismissProgressDialog();
     }
 
     Intent moreInfoIntent;

@@ -1,119 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/presentacion_3"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAzul">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerCrop"
-            android:alpha="0.2"
-            android:src="@drawable/img_presentacion_3" />
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent"
-            android:id="@+id/myLayout"
-            android:layout_weight="1">
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@color/colorWhite">
+    <FrameLayout
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.80"
-                    android:orientation="vertical">
-                        <ScrollView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fillViewport="true">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center_horizontal">
-                                        <ImageView
-                                            android:padding="20dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="100dp"
-                                            android:layout_marginTop="40dp"
-                                            android:src="@drawable/logo_zonngo_white" />
+        android:id="@+id/presentacion_3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--android:background="@color/colorVerde"-->
+            <!--ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:alpha="0.2"
+                android:src="@drawable/img_presentacion_3"/-->
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:id="@+id/myLayout"
+                android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.80"
+                        android:orientation="vertical">
+                            <ScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fillViewport="true">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:gravity="center_horizontal">
+                                            <ImageView
+                                                android:padding="20dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="100dp"
+                                                android:layout_marginTop="30dp"
+                                                android:src="@drawable/logo_color"
+                                                android:id="@+id/imagenzongo"/>
+                                            <TextView
+                                                android:id="@+id/txtTitle"
+                                                android:layout_marginTop="30dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical|center_horizontal"
+                                                android:textAlignment="center"
+                                                android:text="¿Qué estás esperando? \n¡Es gratis!"
+                                                android:textColor="@color/colorletra"
+                                                android:textSize="22sp"
+                                                android:textStyle="bold"/>
+                                            <LinearLayout
+                                                android:layout_marginTop="60dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:paddingLeft="50dp"
+                                                android:paddingRight="50dp">
+                                                <com.facebook.login.widget.LoginButton
+                                                    android:id="@+id/btnWithFacebook"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_marginRight="4dp"
+                                                    android:layout_marginLeft="4dp"
+                                                    android:layout_gravity="center_horizontal"
+                                                    android:paddingTop="11dp"
+                                                    android:paddingBottom="11dp"
+                                                    android:textSize="13sp"/>
+                                                <com.google.android.gms.common.SignInButton
+                                                    android:id="@+id/btnWithGoogle"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp" />
+                                                    <!--android:background="@drawable/bordesboton"-->
+                                                <Button
+                                                    android:id="@+id/btnWithEmail"
+                                                    android:layout_marginTop="5dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Regístrate con e-mail"
+                                                    android:textColor="@color/colorWhite"
+                                                    android:textStyle="bold"
+                                                    android:background="@drawable/bordesboton"/>
+
+                                            </LinearLayout>
+
                                         <TextView
-                                            android:layout_marginTop="40dp"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:gravity="center_vertical|center_horizontal"
-                                            android:textAlignment="center"
-                                            android:text="No esperes más. Registrate!\nEs gratis!"
-                                            android:textColor="@color/colorWhite"
-                                            android:textSize="22sp"
-                                            android:textStyle="bold"/>
-                                        <LinearLayout
-                                            android:layout_marginTop="40dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:paddingLeft="50dp"
-                                            android:paddingRight="50dp"
-                                            >
-                                        <!--Button
-                                            android:id="@+id/btnWithFacebook"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="Regístrate con Facebook"
-                                            android:textColor="@color/colorWhite"
-                                            android:textStyle="bold"
-                                            android:background="@drawable/bontonequinasblancas"/-->
-
-                                        <Button
-                                            android:id="@+id/btnWithEmail"
-                                            android:layout_marginTop="20dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:text="Regístrate con e-mail"
-                                            android:textColor="@color/colorWhite"
-                                            android:textStyle="bold"
-                                            android:background="@drawable/bontonequinasblancas"/>
-
-                                        </LinearLayout>
-                                        <TextView
-                                            android:layout_marginBottom="15dp"
                                             android:id="@+id/ImgBtnEntrar"
-                                            android:layout_marginTop="60dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:layout_marginBottom="15dp"
+                                            android:layout_marginTop="10dp"
                                             android:gravity="center_vertical|center_horizontal"
-                                            android:textAlignment="center"
                                             android:text="Ya tengo cuenta"
-                                            android:textColor="@color/colorWhite"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/colorVerde"
                                             android:textSize="15sp"
-                                            android:textStyle="bold"/>
+                                            android:textStyle="bold" />
 
 
-                                </LinearLayout>
-                        </ScrollView>
+                                    </LinearLayout>
+                            </ScrollView>
 
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.20"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-                        <TextView
-                            android:paddingTop="0dp"
-                            android:paddingBottom="25dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textAlignment="center"
-                            android:text="Al  registrarme declaro que acepto los Términos, Coondiciones y las Políticas de Privacidad de Zonngo."
-                            android:textStyle="bold"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="12sp" />
-                </LinearLayout>
-        </LinearLayout>
-</FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.20"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/eti_terminosycondiciones"
+                                android:paddingTop="0dp"
+                                android:paddingBottom="25dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:textAlignment="center"
+                                android:text="Al  registrarme declaro que acepto los Términos, Coondiciones y las Políticas de Privacidad de Botikapp."
+                                android:textStyle="bold"
+                                android:textColor="@color/gris_semitransparente_light"
+                                android:textSize="12sp" />
+                    </LinearLayout>
+            </LinearLayout>
+    </FrameLayout>
+</ScrollView>

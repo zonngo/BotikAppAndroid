@@ -103,7 +103,7 @@
             android:orientation="vertical">
             <TextView
                 android:text="MÁS CERCANA"
-                android:textColor="@color/colorAzul"
+                android:textColor="@color/colorVerde"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textSize="12sp"

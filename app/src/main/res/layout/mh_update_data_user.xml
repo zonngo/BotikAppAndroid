@@ -43,13 +43,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/txtNombreUpd"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:ems="10"
                             android:hint="Nombre"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:layout_marginTop="15dp"/>
                     </android.support.design.widget.TextInputLayout>
@@ -59,13 +59,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/editApellidoUpd"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:ems="10"
                             android:hint="Apellido"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:layout_marginTop="15dp"/>
                     </android.support.design.widget.TextInputLayout>
@@ -78,14 +78,14 @@
                     >
                     <EditText
                         android:id="@+id/txtEmailAddressUpd"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:enabled="false"
                         android:ems="10"
-                        android:hint="E-mail"
-                        android:textSize="20sp"
+                        android:hint="Correo"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -95,13 +95,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtTelefonoUpd"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone"
                         android:ems="10"
                         android:hint="Número telefónico"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -111,13 +111,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/txtPwdAct"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:ems="10"
                             android:hint="Clave actual"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:layout_marginTop="15dp"/>
                     </android.support.design.widget.TextInputLayout>
@@ -126,13 +126,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/txtPwdNext"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:ems="10"
                             android:hint="Nueva clave (opcional)"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:layout_marginTop="15dp"/>
                     </android.support.design.widget.TextInputLayout>
@@ -144,7 +144,7 @@
                 android:text="Actualizar"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAzul"
+                android:textColor="@color/colorWhite"
                 android:background="@drawable/bordesboton"
                 android:onClick="onClick"
                 android:id="@+id/btnUpd" />

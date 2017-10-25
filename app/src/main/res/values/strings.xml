@@ -1,4 +1,7 @@
 <resources>
+    <string name="facebook_app_id">277773695961090</string>
+    <!--string name="server_client_id">788103646604-9hco9n914m83dhi3gvbtn5e5easp9j0d.apps.googleusercontent.com</string-->
+    <string name="server_client_id">AIzaSyCX9yYtkyhVN1QjXPXV8KYENgTPhilwReo</string>
     <string name="app_name">Botikapp</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_maps">Map</string>

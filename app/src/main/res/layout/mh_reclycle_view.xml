@@ -10,90 +10,91 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/ImageAvatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/ImageAvatar"
-                android:padding="1dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/imagengenericafarmacia"
+                android:padding="1dp"
+                app:aiv_BoarderColor="@android:color/darker_gray"
                 app:aiv_BoarderWidth="1dp"
                 app:aiv_ShowBoarder="true"
-                app:aiv_BoarderColor="@android:color/darker_gray"
-                app:aiv_TextSizeRatio="0.4"
-                android:layout_marginLeft="30dp"
-                android:layout_marginBottom="25dp"
-                />
+                app:aiv_TextSizeRatio="0.4" />
 
             <TextView
-                android:text="Producto:"
+                android:id="@+id/textProductoFind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textCostoFind"
                 android:gravity="center"
-                android:id="@+id/textProductoFind"/>
+                android:text="Producto:" />
+
             <TextView
-                android:text="Costo:"
+                android:id="@+id/textCostoFind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:id="@+id/textCostoFind"/>
+                android:text="Costo:" />
 
             <TextView
-                android:text="Vendedor: "
-                android:gravity="center"
+                android:id="@+id/textVendedorFind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textProductoFind"
-                android:id="@+id/textVendedorFind"/>
+                android:gravity="center"
+                android:text="Vendedor: " />
 
             <ImageView
-                android:layout_marginTop="5dp"
+                android:id="@+id/imagencorazon"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
-                android:id="@+id/imagencorazon"
                 android:layout_alignRight="@id/textCostoFind"
-                android:background="@drawable/ic_km"
-                />
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_km" />
+
             <TextView
-                android:text="km"
+                android:id="@+id/kmFind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/textCostoFind"
-                android:layout_marginRight="10dp"
                 android:layout_below="@+id/imagencorazon"
-                android:id="@+id/kmFind" />
+                android:layout_marginRight="10dp"
+                android:text="km" />
 
             <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:id="@+id/FavoriteButtonFind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:mfb_animate_favorite="true"
-                app:mfb_animate_unfavorite="false"
-                app:mfb_padding="12"
-                app:mfb_favorite_image="@drawable/corazonazul"
-                app:mfb_not_favorite_image="@drawable/corazon"
-                app:mfb_rotation_duration="400"
-                app:mfb_rotation_angle="360"
-                app:mfb_bounce_duration="300"
-                app:mfb_color="black"
-                app:mfb_type="star"
                 android:layout_alignParentTop="true"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
                 android:layout_toLeftOf="@+id/imagencorazon"
                 android:layout_toStartOf="@+id/imagencorazon"
-                android:layout_marginRight="28dp"
-                android:layout_marginEnd="28dp"
-                android:id="@+id/FavoriteButtonFind" />
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="false"
+                app:mfb_bounce_duration="300"
+                app:mfb_color="black"
+                app:mfb_favorite_image="@drawable/corazonazul"
+                app:mfb_not_favorite_image="@drawable/corazon"
+                app:mfb_padding="12"
+                app:mfb_rotation_angle="360"
+                app:mfb_rotation_duration="400"
+                app:mfb_type="star" />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/wallet_bright_foreground_holo_light"/>
+            android:background="@color/wallet_bright_foreground_holo_light" />
 
     </LinearLayout>
 

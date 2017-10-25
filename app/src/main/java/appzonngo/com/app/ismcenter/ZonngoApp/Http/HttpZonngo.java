@@ -1,4 +1,4 @@
-package appzonngo.com.app.ismcenter.ZonngoApp.recovery;
+package appzonngo.com.app.ismcenter.ZonngoApp.Http;
 
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +46,9 @@ import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_ListarProdBy
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Notificaciones;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Register;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_UpdateUsuario;
+import appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Login;
+import appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Presentacion;
+import appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Principal;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Sesion.Preferences;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Calculate;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.MyDialoges;
@@ -711,7 +714,7 @@ public class HttpZonngo {
                 }
                 Log.e("Logout_SEGURO", ":"+"LLLLLLLLLLLLLL");
                 Preferences.logOutpPreferences(vista);
-                Intent salir = new Intent(vista.getApplicationContext(), MH_Activity_Login.class);
+                Intent salir = new Intent(vista.getApplicationContext(), MH_Activity_Presentacion.class);
                 vista.startActivity(salir);
                 vista.finish();
 
@@ -936,7 +939,6 @@ public class HttpZonngo {
         });
     }
 
-
     public void RegisterUser(MH_DataModel_Register usuario)
     {
         //showpDialog();
@@ -990,7 +992,6 @@ public class HttpZonngo {
             //ActualizarFavoritos(vista.id_session());
         }
     }
-
 
     public List<MH_DataModelSugerencias> getListaSUgerencias() {
         return listaSUgerencias;

@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
+import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_LoginFacebook;
+import appzonngo.com.app.ismcenter.ZonngoApp.Http.HttpZonngo;
 import appzonngo.com.app.ismcenter.ZonngoApp.Interfaces.iLogin;
+import appzonngo.com.app.ismcenter.ZonngoApp.Interfaces.iLoginFacebook;
 import appzonngo.com.app.ismcenter.zonngo2.R;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModelLogin;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Sesion.Preferences;
@@ -113,7 +116,7 @@ public class MH_Activity_Login extends AppCompatActivity {
     public void Login_usurario()
     {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://accounts.zonngo.com/")
+                .baseUrl(HttpZonngo.URL_BASE_ACOUNT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -138,7 +141,7 @@ public class MH_Activity_Login extends AppCompatActivity {
                     //Se indicque que esta logueado
                     Preferences.clearDataUser(MH_Activity_Login.this);
                     //Se limpia data de usuario
-                    Preferences.setLogin(MH_Activity_Login.this, true, response.body().getSessionId(), txtPassword.getText().toString());
+                    Preferences.setLogin(MH_Activity_Login.this, true, Preferences.LOGIN_EMAIL, response.body().getSessionId(), txtPassword.getText().toString());
                     finish();
                 }else
                 {
@@ -156,6 +159,7 @@ public class MH_Activity_Login extends AppCompatActivity {
         });
 
     }
+
 
 /*
     @Override

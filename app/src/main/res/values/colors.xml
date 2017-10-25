@@ -2,9 +2,11 @@
 <resources>
     <color name="colorPrimary">#FFF</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#45afe0</color>
-    <color name="colorAzul">#45afe0</color>
+    <color name="colorAccent">#bade40</color>
+    <color name="colorVerde">#bade40</color>
     <color name="colorModal">#e2e5e6</color>
+
+    <color name="colorletra">#3F4141</color>
 
     <color name="colorTransparent">#00ffffff</color>
 
@@ -12,7 +14,7 @@
     <color name="colorNotification">#c0474747</color>
     <color name="colorNewNotification">#D8D8D8</color>
     <color name="colorNull">#00ffffff</color>
-
+    <color name="colorNegro">#000000</color>
     <color name="colorClientGray">#a7a7a7</color>
 
     <color name="gris_semitransparente_light">#4d474747</color>

@@ -25,6 +25,13 @@ public class Preferences {
     public static final String KEY_AVATAR = "avatar";
     public static final String KEY_PASSWORD = "password";
     public static final String Key_ID = "id_session";
+
+    //CONTROL DE LOGIN
+    private static final String TYPE_LOGIN = "type_login";
+    public static final String LOGIN_FACEBOOK = "login_facebook";
+    public static final String LOGIN_GOOGLE = "login_google";
+    public static final String LOGIN_EMAIL = "login_email";
+
     public static void setString(String key, String value, Context context) {
         //context.getSharedPreferences("BASE",0);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -59,6 +66,7 @@ public class Preferences {
         setString(Preferences.KEY_EMAIL,null,mycontext);///ESTA ES LA MIA
         setString(Preferences.KEY_TELEFONO,null,mycontext);///ESTA ES LA MIA
         setString(Preferences.KEY_AVATAR,null,mycontext);///ESTA ES LA MIA
+        setString(Preferences.TYPE_LOGIN,null,mycontext);///ESTA ES LA MIA
         setBoolean(Preferences.IS_DATA,false,mycontext);///ESTA ES LA MIA
     }
 
@@ -81,13 +89,16 @@ public class Preferences {
         setBoolean(Preferences.IS_DATA,false,mycontext);///ESTA ES LA MIA
     }
 
-    public static void setLogin(Context mycontext, Boolean isLogin, String idSesion, String psw){
+    public static void setLogin(Context mycontext, Boolean isLogin, String typeLogin, String idSesion, String psw){
         setBoolean(Preferences.IS_LOGIN,true,mycontext);
         setString(Preferences.KEY_SESION,idSesion,mycontext);///ESTA ES LA MIA
+        setString(Preferences.TYPE_LOGIN,typeLogin,mycontext);
         setString(Preferences.KEY_PASSWORD,psw,mycontext);///ESTA ES LA MIA
     }
 
-
+    public static String getTypeLogin(Context mycontext){
+        return getString(Preferences.TYPE_LOGIN,mycontext);
+    }
 
     public static Boolean idDataReady(Context mycontext){
         return getBoolean(Preferences.IS_DATA,mycontext);

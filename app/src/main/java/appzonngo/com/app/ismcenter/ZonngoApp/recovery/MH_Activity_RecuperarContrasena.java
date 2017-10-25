@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.regex.Pattern;
 
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_RecupClave;
+import appzonngo.com.app.ismcenter.ZonngoApp.Http.HttpZonngo;
 import appzonngo.com.app.ismcenter.ZonngoApp.Interfaces.iRecuperarContrasena;
 import appzonngo.com.app.ismcenter.zonngo2.R;
 import retrofit2.Call;
@@ -74,7 +75,7 @@ public  class MH_Activity_RecuperarContrasena extends AppCompatActivity {
         usuario.setEmail(txtEmailR.getText().toString());
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://accounts.zonngo.com/")
+                .baseUrl(HttpZonngo.URL_BASE_ACOUNT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

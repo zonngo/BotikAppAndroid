@@ -41,13 +41,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/txtNombre"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:ems="10"
                             android:hint="Nombre"
-                            android:textSize="22sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:nextFocusRight="@+id/txtApellido"
                             android:imeOptions="actionNext"
@@ -59,13 +59,13 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:id="@+id/txtApellido"
-                            android:textColor="@color/colorAzul"
+                            android:textColor="@color/colorletra"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textCapWords"
                             android:ems="10"
                             android:hint="Apellido"
-                            android:textSize="22sp"
+                            android:textSize="16sp"
                             android:maxLines="1"
                             android:layout_marginTop="15dp"/>
                     </android.support.design.widget.TextInputLayout>
@@ -78,13 +78,13 @@
                     >
                     <EditText
                         android:id="@+id/txtE_mail"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:ems="10"
-                        android:hint="E-mail"
-                        android:textSize="22sp"
+                        android:hint="Correo"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -94,13 +94,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtTelefonos"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone"
                         android:ems="10"
                         android:hint="Número telefónico"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -110,13 +110,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtPwd1"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:ems="10"
                         android:hint="Crear clave"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -126,13 +126,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtPwd2"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:ems="10"
                         android:hint="Confirmar clave"
-                        android:textSize="22sp"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -142,7 +142,7 @@
                     android:text="Registrarme"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAzul"
+                    android:textColor="@color/colorWhite"
                     android:background="@drawable/bordesboton"
                     android:onClick="onClick"
                     android:id="@+id/btnRegistrar" />
@@ -169,7 +169,7 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textAlignment="center"
                     android:text="Al registrarme declaro que; acepto los términos y condiciones de las políticas de privacidad de Zonngo"
-                    android:textColor="@color/colorAzul"
+                    android:textColor="@color/colorWhite"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>

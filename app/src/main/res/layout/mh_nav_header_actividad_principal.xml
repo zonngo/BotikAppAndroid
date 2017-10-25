@@ -29,7 +29,7 @@
             android:id="@+id/txtNavNameUser"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/colorAzul"
+            android:textColor="@color/colorVerde"
             android:paddingLeft="5dp"
             android:text="Marwuin H."
             android:textSize="22dp"

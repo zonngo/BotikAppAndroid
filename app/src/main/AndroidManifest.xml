@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -37,34 +36,50 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
         <!--
+        "
+        AIzaSyCX9yYtkyhVN1QjXPXV8KYENgTPhilwReo
+
+        AIzaSyCX9yYtkyhVN1QjXPXV8KYENgTPhilwReo
             meta-data
+
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" /
         -->
 
         <meta-data
+
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAgSyvM-bB_grjkCn0Zplm0xPjWPfx7Avw" />
+            android:value="AIzaSyDjv0elRn4-jAyqG-oCfuy1K2D6BpvSB-w" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
 
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Login"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Principal"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Register"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_RecuperarContrasena"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Presentacion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="appzonngo.com.app.ismcenter.ZonngoApp.recovery.TestActivity"></activity>
     </application>
 
 </manifest>

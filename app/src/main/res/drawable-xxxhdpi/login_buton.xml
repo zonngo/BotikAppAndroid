@@ -5,9 +5,9 @@
 
 
             <gradient
-                android:startColor="@color/colorAzul"
-                android:centerColor="@color/colorNull"
-                android:endColor="@color/colorAzul"
+                android:startColor="@color/colorVerde"
+                android:centerColor="@color/colorVerde"
+                android:endColor="@color/colorVerde"
                 android:angle="315"/>
 
             <corners android:radius="5dp" />

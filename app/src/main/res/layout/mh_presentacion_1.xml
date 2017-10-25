@@ -4,7 +4,7 @@
     android:id="@+id/presentacion_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAzul">
+    android:background="@color/colorVerde">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
 
-                    android:text="Zonngo al alcance de las personas que realmente la necesitan."
+                    android:text="Botikapp al alcance de las personas que realmente la necesitan."
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"

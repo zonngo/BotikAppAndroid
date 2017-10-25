@@ -34,13 +34,13 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/txtEmailR"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorletra"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
                         android:ems="10"
-                        android:hint="E-mail"
-                        android:textSize="22sp"
+                        android:hint="Correo"
+                        android:textSize="16sp"
                         android:maxLines="1"
                         android:layout_marginTop="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -49,7 +49,7 @@
                     android:text="Solicitar clave"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAzul"
+                    android:textColor="@color/colorWhite"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bordesboton"
                     android:onClick="onClick"
@@ -76,7 +76,7 @@
                         android:gravity="center_vertical"
                         android:textAlignment="center"
                         android:text="Debe ingresar su correo electrónico... le será enviada su clave de acceso al mismo"
-                        android:textColor="@color/colorAzul"
+                        android:textColor="@color/colorWhite"
                         android:textSize="13sp" />
                 </LinearLayout>
             </LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="appzonngo.com.app.ismcenter.ZonngoApp.recovery.TestActivity">
+        <TextView
+            android:id="@+id/eti_info_usurio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Informacion Usuario"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"/>
+        <TextView
+            android:id="@+id/info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/info_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/info_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"/>
+        <Button
+            android:id="@+id/btn_cerrar_secion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="480dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Cerrar Secion"/>
+</RelativeLayout>
