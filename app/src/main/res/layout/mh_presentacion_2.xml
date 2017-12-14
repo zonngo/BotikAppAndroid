@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
                     android:textAlignment="center"
-                    android:text="Lo mejor para ti"
+                    android:text="Los mejores precios para ti"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="El uso de fármacos debe mostrarse como una cultura en el país."
+                    android:text="Te recomendamos los medicamentos genéricos y otras marcas."
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"

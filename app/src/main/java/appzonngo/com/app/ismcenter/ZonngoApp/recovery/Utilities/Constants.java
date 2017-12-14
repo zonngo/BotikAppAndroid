@@ -5,6 +5,6 @@ package appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities;
  */
 
 public class Constants {
-    public static String BROADCAST_RECEIVER_GPS="broadcast_receiver_gps";
-    public static String UPDATE_LOCATION="update_location";
+    public static String BROADCAST_RECEIVER_GPS = "broadcast_receiver_gps";
+    public static String UPDATE_LOCATION = "update_location";
 }

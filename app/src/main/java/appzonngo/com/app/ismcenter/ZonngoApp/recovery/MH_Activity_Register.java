@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.regex.Pattern;
 
+import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Register;
 import appzonngo.com.app.ismcenter.ZonngoApp.Http.HttpZonngo;
 import appzonngo.com.app.ismcenter.zonngo2.R;
-import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Register;
 
 public class MH_Activity_Register extends AppCompatActivity {
     EditText txtNombre;
@@ -30,12 +30,12 @@ public class MH_Activity_Register extends AppCompatActivity {
         setContentView(R.layout.mh_page_register_user);
         //
 
-        txtNombre=(EditText) findViewById(R.id.txtNombre);
-        txtApellido=(EditText) findViewById(R.id.txtApellido);
-        txtE_mail=(EditText) findViewById(R.id.txtE_mail);
-        txtTelefono=(EditText) findViewById(R.id.txtTelefonos);
-        txtPwd1=(EditText) findViewById(R.id.txtPwd1);
-        txtPwd2=(EditText) findViewById(R.id.txtPwd2);
+        txtNombre = (EditText) findViewById(R.id.txtNombre);
+        txtApellido = (EditText) findViewById(R.id.txtApellido);
+        txtE_mail = (EditText) findViewById(R.id.txtE_mail);
+        txtTelefono = (EditText) findViewById(R.id.txtTelefonos);
+        txtPwd1 = (EditText) findViewById(R.id.txtPwd1);
+        txtPwd2 = (EditText) findViewById(R.id.txtPwd2);
     }
 
 
@@ -60,7 +60,7 @@ public class MH_Activity_Register extends AppCompatActivity {
             setLoginError("teléfono es requerido", txtTelefono);
         } else if (txtPwd1.getText().toString().isEmpty()) {
             setLoginError("clave es requerida", txtPwd1);
-        } else if (txtPwd1.getText().toString().length()<6) {
+        } else if (txtPwd1.getText().toString().length() < 6) {
             setLoginError("6 caracteres mínimo", txtPwd1);
         } else if (txtPwd2.getText().toString().isEmpty()) {
             setLoginError("confirmación es requerida", txtPwd2);
@@ -85,8 +85,8 @@ public class MH_Activity_Register extends AppCompatActivity {
     }
 
 
-    public void Registrar_usurario(){
-        MH_DataModel_Register usuario=new MH_DataModel_Register();
+    public void Registrar_usurario() {
+        MH_DataModel_Register usuario = new MH_DataModel_Register();
         usuario.setName(txtNombre.getText().toString());
         usuario.setApellido(txtApellido.getText().toString());
         usuario.setNumero(txtTelefono.getText().toString());

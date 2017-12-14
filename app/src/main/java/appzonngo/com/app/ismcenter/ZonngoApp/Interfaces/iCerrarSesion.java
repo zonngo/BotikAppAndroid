@@ -12,4 +12,4 @@ import retrofit2.http.Query;
 public interface iCerrarSesion {
     @GET("logout")
     Call<MH_DataModel_CerrarSesion> logoutUsuario(@Query("session_id") String session_id);
-        }
+}

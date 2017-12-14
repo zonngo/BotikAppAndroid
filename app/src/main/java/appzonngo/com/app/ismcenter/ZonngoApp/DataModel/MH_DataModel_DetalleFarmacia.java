@@ -1,4 +1,3 @@
-
 package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 import java.util.HashMap;
@@ -27,324 +26,252 @@ public class MH_DataModel_DetalleFarmacia {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The estado
+     * @return The estado
      */
     public String getEstado() {
         return estado;
     }
 
     /**
-     * 
-     * @param estado
-     *     The estado
+     * @param estado The estado
      */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
     /**
-     * 
-     * @return
-     *     The tipoEst
+     * @return The tipoEst
      */
     public String getTipoEst() {
         return tipoEst;
     }
 
     /**
-     * 
-     * @param tipoEst
-     *     The tipo_est
+     * @param tipoEst The tipo_est
      */
     public void setTipoEst(String tipoEst) {
         this.tipoEst = tipoEst;
     }
 
     /**
-     * 
-     * @return
-     *     The nombre
+     * @return The nombre
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * 
-     * @param nombre
-     *     The nombre
+     * @param nombre The nombre
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * 
-     * @return
-     *     The ubigeo
+     * @return The ubigeo
      */
     public Object getUbigeo() {
         return ubigeo;
     }
 
     /**
-     * 
-     * @param ubigeo
-     *     The ubigeo
+     * @param ubigeo The ubigeo
      */
     public void setUbigeo(Object ubigeo) {
         this.ubigeo = ubigeo;
     }
 
     /**
-     * 
-     * @return
-     *     The direccion
+     * @return The direccion
      */
     public String getDireccion() {
         return direccion;
     }
 
     /**
-     * 
-     * @param direccion
-     *     The direccion
+     * @param direccion The direccion
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
     /**
-     * 
-     * @return
-     *     The provincia
+     * @return The provincia
      */
     public String getProvincia() {
         return provincia;
     }
 
     /**
-     * 
-     * @param provincia
-     *     The provincia
+     * @param provincia The provincia
      */
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
     /**
-     * 
-     * @return
-     *     The telefono
+     * @return The telefono
      */
     public String getTelefono() {
         return telefono;
     }
 
     /**
-     * 
-     * @param telefono
-     *     The telefono
+     * @param telefono The telefono
      */
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
     /**
-     * 
-     * @return
-     *     The horario
+     * @return The horario
      */
     public Object getHorario() {
         return horario;
     }
 
     /**
-     * 
-     * @param horario
-     *     The horario
+     * @param horario The horario
      */
     public void setHorario(Object horario) {
         this.horario = horario;
     }
 
     /**
-     * 
-     * @return
-     *     The dtecnico
+     * @return The dtecnico
      */
     public String getDtecnico() {
         return dtecnico;
     }
 
     /**
-     * 
-     * @param dtecnico
-     *     The dtecnico
+     * @param dtecnico The dtecnico
      */
     public void setDtecnico(String dtecnico) {
         this.dtecnico = dtecnico;
     }
 
     /**
-     * 
-     * @return
-     *     The lat
+     * @return The lat
      */
     public Float getLat() {
         return lat;
     }
 
     /**
-     * 
-     * @param lat
-     *     The lat
+     * @param lat The lat
      */
     public void setLat(Float lat) {
         this.lat = lat;
     }
 
     /**
-     * 
-     * @return
-     *     The lng
+     * @return The lng
      */
     public Float getLng() {
         return lng;
     }
 
     /**
-     * 
-     * @param lng
-     *     The lng
+     * @param lng The lng
      */
     public void setLng(Float lng) {
         this.lng = lng;
     }
 
     /**
-     * 
-     * @return
-     *     The distrito
+     * @return The distrito
      */
     public String getDistrito() {
         return distrito;
     }
 
     /**
-     * 
-     * @param distrito
-     *     The distrito
+     * @param distrito The distrito
      */
     public void setDistrito(String distrito) {
         this.distrito = distrito;
     }
 
     /**
-     * 
-     * @return
-     *     The departamento
+     * @return The departamento
      */
     public String getDepartamento() {
         return departamento;
     }
 
     /**
-     * 
-     * @param departamento
-     *     The departamento
+     * @param departamento The departamento
      */
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
 
     /**
-     * 
-     * @return
-     *     The ruc
+     * @return The ruc
      */
     public String getRuc() {
         return ruc;
     }
 
     /**
-     * 
-     * @param ruc
-     *     The ruc
+     * @param ruc The ruc
      */
     public void setRuc(String ruc) {
         this.ruc = ruc;
     }
 
     /**
-     * 
-     * @return
-     *     The situacion
+     * @return The situacion
      */
     public String getSituacion() {
         return situacion;
     }
 
     /**
-     * 
-     * @param situacion
-     *     The situacion
+     * @param situacion The situacion
      */
     public void setSituacion(String situacion) {
         this.situacion = situacion;
     }
 
     /**
-     * 
-     * @return
-     *     The categoria
+     * @return The categoria
      */
     public String getCategoria() {
         return categoria;
     }
 
     /**
-     * 
-     * @param categoria
-     *     The categoria
+     * @param categoria The categoria
      */
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
     /**
-     * 
-     * @return
-     *     The razonSocial
+     * @return The razonSocial
      */
     public String getRazonSocial() {
         return razonSocial;
     }
 
     /**
-     * 
-     * @param razonSocial
-     *     The razonSocial
+     * @param razonSocial The razonSocial
      */
     public void setRazonSocial(String razonSocial) {
         this.razonSocial = razonSocial;

@@ -11,9 +11,10 @@ import android.provider.Settings;
 public class myIntents {
     /**
      * Va a la interfaz de permisos de las aplicaciones
+     *
      * @param myContext
      */
-    public static void ACTION_APPLICATION_DETAILS_SETTINGS(Context myContext){
+    public static void ACTION_APPLICATION_DETAILS_SETTINGS(Context myContext) {
         myContext.startActivity(
                 new Intent()
                         .setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -22,13 +23,14 @@ public class myIntents {
 
     /**
      * Interfaz de permiso de GPS
+     *
      * @param myContext
      */
 
-    public static void ACTION_LOCATION_SOURCE_SETTINGS(Context myContext){
+    public static void ACTION_LOCATION_SOURCE_SETTINGS(Context myContext) {
         myContext.startActivity(
                 new Intent()
-                .setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                        .setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
         );
     }
 }

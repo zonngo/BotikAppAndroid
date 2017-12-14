@@ -23,8 +23,10 @@ import appzonngo.com.app.ismcenter.zonngo2.R;
 
 public class GPSCoordenates extends Service implements
         LocationListener {
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
     private static String TAG = GPSCoordenates.class.getName(); //get Name class
-    private Context mContext;
+    protected LocationManager locationManager;
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean isGPSTrackingEnabled = false;
@@ -32,23 +34,21 @@ public class GPSCoordenates extends Service implements
     double latitude;
     double longitude;
     int geocoderMaxResults = 1;
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
-    protected LocationManager locationManager;
-    private String provider_info="";
+    private Context mContext;
+    private String provider_info = "";
 
     public GPSCoordenates(Context context) {
         this.mContext = context;
     }
 
-    public Double[] getCoordinates(){
-        Double[] coordinates=null;
-        if(getLocationManager()){
-            if(startCoordinatesService()){
-                if(searchCoordinates()){
+    public Double[] getCoordinates() {
+        Double[] coordinates = null;
+        if (getLocationManager()) {
+            if (startCoordinatesService()) {
+                if (searchCoordinates()) {
                     coordinates = new Double[2];
-                    coordinates[0]=latitude;
-                    coordinates[1]=longitude;
+                    coordinates[0] = latitude;
+                    coordinates[1] = longitude;
                     //stopCoordinatesService();//QUE NO SIGA ACTUALIZANDO (OJOOOOOOOO)
                 }
             }
@@ -59,22 +59,22 @@ public class GPSCoordenates extends Service implements
         return coordinates;
     }
 
-    public boolean getLocationManager(){
+    public boolean getLocationManager() {
         try {
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (isGPSEnabled) {
                 this.isGPSTrackingEnabled = true;
-                myDebug.showLog_d(TAG+"->","Application use GPS Service");
+                myDebug.showLog_d(TAG + "->", "Application use GPS Service");
                 provider_info = LocationManager.GPS_PROVIDER;
             } else if (isNetworkEnabled) {
                 this.isGPSTrackingEnabled = true;
-                myDebug.showLog_d(TAG+"->","Application use Network State to get GPS coordinates");
+                myDebug.showLog_d(TAG + "->", "Application use Network State to get GPS coordinates");
                 provider_info = LocationManager.NETWORK_PROVIDER;
             }
         } catch (Exception e) {
-            myDebug.showLog_e(TAG+"->","Impossible to connect to LocationManager",e);
+            myDebug.showLog_e(TAG + "->", "Impossible to connect to LocationManager", e);
         }
         return this.isGPSTrackingEnabled;
     }
@@ -106,7 +106,7 @@ public class GPSCoordenates extends Service implements
                     && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
 
-                Toast.makeText(mContext,R.string.gps_off_permission, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.gps_off_permission, Toast.LENGTH_LONG).show();
                 myIntents.ACTION_APPLICATION_DETAILS_SETTINGS(mContext);
                 return false;
             } else {
@@ -116,13 +116,13 @@ public class GPSCoordenates extends Service implements
             location = locationManager.getLastKnownLocation(provider_info);
         }
 
-        int exit=0;
-        while((getLatitude()==0.0)||(getLongitude()==0.0)) {
+        int exit = 0;
+        while ((getLatitude() == 0.0) || (getLongitude() == 0.0)) {
             exit += 1;
             try {
                 Thread.sleep(5000);//5 segungos detectando ubicacion
-                if (exit == 5){
-                    Toast.makeText(mContext,R.string.gps_fail, Toast.LENGTH_LONG).show();
+                if (exit == 5) {
+                    Toast.makeText(mContext, R.string.gps_fail, Toast.LENGTH_LONG).show();
                     return false;
                 }
             } catch (InterruptedException e) {
@@ -183,36 +183,40 @@ public class GPSCoordenates extends Service implements
 
     /**
      * Cambio en la ubicacion
+     *
      * @param location
      */
     @Override
     public void onLocationChanged(Location location) {
-        this.location=location;
-        myDebug.showLog_d(TAG+"->","onLocationChanged: "+location.getLatitude()+" _ "+location.getLongitude());
+        this.location = location;
+        myDebug.showLog_d(TAG + "->", "onLocationChanged: " + location.getLatitude() + " _ " + location.getLongitude());
     }
 
     /**
      * Cambio status del proveedor (OUT_OF_SERVICE, TEMPORARILY_UNAVAILABLE, AVAILABLE)
+     *
      * @param provider
      * @param status
      * @param extras
      */
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        myDebug.showLog_d(TAG+"->","onStatusChanged: ");
+        myDebug.showLog_d(TAG + "->", "onStatusChanged: ");
     }
 
     /**
      * GPS es habilitado
+     *
      * @param provider
      */
     @Override
     public void onProviderEnabled(String provider) {
-        myDebug.showLog_d(TAG+"->","onProviderEnabled: ");
+        myDebug.showLog_d(TAG + "->", "onProviderEnabled: ");
     }
 
     /**
      * GPS es desactivado
+     *
      * @param provider
      */
     @Override
@@ -222,6 +226,7 @@ public class GPSCoordenates extends Service implements
 
     /**
      * Ejecutar tareas en segundo plano (Class Service)
+     *
      * @param intent
      * @return
      */

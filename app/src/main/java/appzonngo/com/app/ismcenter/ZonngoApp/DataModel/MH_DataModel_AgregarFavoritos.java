@@ -1,4 +1,3 @@
-
 package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 
@@ -19,12 +18,12 @@ public class MH_DataModel_AgregarFavoritos {
         return session_id;
     }
 
-    public int getIdProducto() {
-        return idProducto;
-    }
-
     public void setSession_id(String session_id) {
         this.session_id = session_id;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
     }
 
     public void setIdProducto(int idProducto) {

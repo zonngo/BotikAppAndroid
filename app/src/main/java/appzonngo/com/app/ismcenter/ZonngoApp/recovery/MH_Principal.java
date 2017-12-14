@@ -1,7 +1,6 @@
 package appzonngo.com.app.ismcenter.ZonngoApp.recovery;
 
 import android.app.AlertDialog;
-
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -25,7 +25,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -65,16 +64,13 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.plus.Plus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,17 +78,17 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Notificaciones;
+import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Ubigeo;
 import appzonngo.com.app.ismcenter.ZonngoApp.Http.HttpZonngo;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyGoogleApiActivity;
+import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyMaps;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyNetWork;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Sesion.Preferences;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Constants;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Keyboard;
-import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Ubigeo;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.MyDialoges;
 import appzonngo.com.app.ismcenter.zonngo2.R;
-import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_Notificaciones;
-import appzonngo.com.app.ismcenter.ZonngoApp.recovery.GPS.MyMaps;
 
 import static appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Activity_Presentacion.mGoogleApiClient;
 
@@ -101,22 +97,22 @@ public class MH_Principal extends MyGoogleApiActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
         ViewPagerEx.OnPageChangeListener,
         OnMapReadyCallback {
-    private String TAG = "MH_Activity_Present";
     private static final int RC_SIGN_IN = 4546;
-    static int PAGE_TOTAL=5;
-    static int PAGE_MAIN=0;
-    public static int PAGE_ENCONTRADOS=1;
-    static int PAGE_FAVORITE=2;
-    static int PAGE_NOTIFICACIONES=3;
-    static int PAGE_USER=4;
-    private CallbackManager callbackManager;
-    final String LOG="MH_Principal";
+    public static int PAGE_ENCONTRADOS = 1;
+    static int PAGE_TOTAL = 5;
+    static int PAGE_MAIN = 0;
+    static int PAGE_FAVORITE = 2;
+    static int PAGE_NOTIFICACIONES = 3;
+    static int PAGE_USER = 4;
+    static int TIPO_DEFAULT = 0;
+    static int TIPO_MARCA = 1;
+    static int TIPO_GENERICO = 2;
     //Menu inferior
-
-    BottomNavigationView bNavigation;
-    //Menu lateral
-    private DrawerLayout mDrawerLayout;
-
+    static int ORDER_BY_DISTANCE_ASC = 0;
+    static int ORDER_BY_DISTANCE_DESC = 1;
+    static int ORDER_BY_PRICE_ASC = 2;
+    static int ORDER_BY_PRICE_DESC = 3;
+    final String LOG = "MH_Principal";
     public SwipeRefreshLayout swipeRecycler;
     public RecyclerView recyclerSugerencias;
     public RecyclerView recyclerProductos;
@@ -126,6 +122,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
     public MH_AdapterProdByUbication adapterProductos;
     public MH_AdapterListFavorito adapterFavoritos;
     public MH_AdapterNotificaciones adapterNotificaciones;
+    BottomNavigationView bNavigation;
     //VIEW PAGER
     ViewPager mViewPager;
     View viewFlipper;
@@ -137,18 +134,103 @@ public class MH_Principal extends MyGoogleApiActivity implements
     TextView txtNavNameUser;
     //FILTRO
     MH_BottomSheetAdapter_FIlter bsAdapter;
-
     List<MH_DataModel_Ubigeo> ubigeoSelected;
-    static int TIPO_DEFAULT=0;
-    static int TIPO_MARCA=1;
-    static int TIPO_GENERICO=2;
-    int tipoSearch=TIPO_DEFAULT;
+    int tipoSearch = TIPO_DEFAULT;
+    int oderSearch = ORDER_BY_DISTANCE_ASC;
+    /**
+     * se ejecuta cuando se tiene disponible el Token de firebase (ver>MyFirebaseInstanceIDService)
+     */
+    BroadcastReceiver gpsBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getBooleanExtra(Constants.UPDATE_LOCATION, false))//si llego mensaje del GPS
+            {
+                if (mViewPager.getCurrentItem() == PAGE_ENCONTRADOS) {
+                    Log.e("GPS Broadcast Receiver", "true");
+                    LatLng coord = getLatLng();
+                    myMaps.makeUserPosition(coord);
+                    myMaps.animateCameraWithOutZoom(coord);
 
-    static int ORDER_BY_DISTANCE_ASC =0;
-    static int ORDER_BY_DISTANCE_DESC =1;
-    static int ORDER_BY_PRICE_ASC =2;
-    static int ORDER_BY_PRICE_DESC =3;
-    int oderSearch= ORDER_BY_DISTANCE_ASC;
+                    //PARA PRUEBAS EN VENEZUELA
+                    /*
+                    LatLng coordPruebasVzla=new LatLng(MyMaps.latPrueba,MyMaps.lngPrueba);
+                    myMaps.makeUserPosition(coordPruebasVzla);
+                    myMaps.animateCameraWithOutZoom(coordPruebasVzla);
+                    */
+                }
+            }
+        }
+    };
+    String generico;//para evitar otra consulta, debio llegar en detalle de farmaco
+    //contenedro mapa
+    LinearLayout contenMaps;
+    //String nombre;
+    EditText editTNombre = null;
+    EditText editApellido = null;
+    EditText editEmail = null;
+    EditText editTelefono = null;
+    EditText editPasswordAct = null;
+    EditText editPasswordNext = null;
+    Button btnUpdate;
+    SliderLayout mDemoSlider;
+
+    ///LatLng broadcastLatLng;
+    //Para medicamentos de menor rpecio
+    //ImageView imagen_farmacoMenor;
+    TextView txtProductoMenor;
+    TextView txtFarmaciaMenor;
+    TextView txtPrecioMenor;
+
+/*
+    @CallSuper
+    public void setSelectedItem(int position) {
+        if (position >= getMenu().size() || position < 0) return;
+
+        View menuItemView = getMenuItemView(position);
+        if (menuItemView == null) return;
+        MenuItemImpl itemData = ((MenuView.ItemView) menuItemView).getItemData();
+
+
+        itemData.setChecked(true);
+
+        boolean previousHapticFeedbackEnabled = menuItemView.isHapticFeedbackEnabled();
+        menuItemView.setSoundEffectsEnabled(false);
+        menuItemView.setHapticFeedbackEnabled(false); //avoid hearing click sounds, disable haptic and restore settings later of that view
+        menuItemView.performClick();
+        menuItemView.setHapticFeedbackEnabled(previousHapticFeedbackEnabled);
+        menuItemView.setSoundEffectsEnabled(true);
+
+
+        mLastSelection = position;
+
+    }
+*/
+    TextView txtGenerico;
+    TextView txtPriority;
+    FloatingActionButton fab_maps;
+    SupportMapFragment mapFragment;
+    //TextView txtGenericoMenor;
+    Intent moreInfoIntent;
+    private String TAG = "MH_Activity_Present";
+    private CallbackManager callbackManager;
+    //Menu lateral
+    private DrawerLayout mDrawerLayout;
+    //NotificationsTask nt;
+    private Timer myTimer;
+    private Runnable Timer_Tick = new Runnable() {
+        public void run() {
+            http.VerificarNotificaciones(id_session());
+
+            //This method runs in the same thread as the UI.
+
+            //Do something to the UI thread here
+
+        }
+    };
+    private SearchView searchView;
+    private EditText txtSearchSUgerencias;
+    private View focusView = null;
+    private ProgressDialog loading;
 
     public int getOderSearch() {
         return oderSearch;
@@ -166,7 +248,6 @@ public class MH_Principal extends MyGoogleApiActivity implements
         this.tipoSearch = tipoSearch;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MultiDex.install(this);
@@ -178,14 +259,14 @@ public class MH_Principal extends MyGoogleApiActivity implements
         View headerLayout = ((NavigationView) mDrawerLayout.findViewById(R.id.nav_view)).getHeaderView(0);
         txtNavNameUser = (TextView) headerLayout.findViewById(R.id.txtNavNameUser);
 
-        myMaps=new MyMaps(this);
-        http=new HttpZonngo(this);
+        myMaps = new MyMaps(this);
+        http = new HttpZonngo(this);
 
-        ubigeoSelected=new ArrayList<>();
+        ubigeoSelected = new ArrayList<>();
 
         adapterProductos = new MH_AdapterProdByUbication(http.getListProdFramByLatLng(), MH_Principal.this);
         adapterFavoritos = new MH_AdapterListFavorito(http.getListProdFravoritos());
-        adapterNotificaciones=new MH_AdapterNotificaciones(http.getListaNotificaciones(), MH_Principal.this);
+        adapterNotificaciones = new MH_AdapterNotificaciones(http.getListaNotificaciones(), MH_Principal.this);
 
 
         http.ActualizarFavoritos(id_session());
@@ -217,11 +298,11 @@ public class MH_Principal extends MyGoogleApiActivity implements
             @Override
             public void onRefresh() {
                 Log.e("Refresh Global", "......................");
-                if(mViewPager.getCurrentItem()==PAGE_FAVORITE) {
+                if (mViewPager.getCurrentItem() == PAGE_FAVORITE) {
                     Log.e("Refresh favorite", "......................");
                     http.ActualizarFavoritos(id_session());
                 }
-                if(mViewPager.getCurrentItem()==PAGE_NOTIFICACIONES) {
+                if (mViewPager.getCurrentItem() == PAGE_NOTIFICACIONES) {
                     Log.e("Refresh Notificaciones", "......................");
                     //http.VerificarNotificaciones(id_session());
                     http.ObtenerNotificacionesAll(id_session());
@@ -239,42 +320,40 @@ public class MH_Principal extends MyGoogleApiActivity implements
             public void onPageSelected(int position) {
                 swipeRecycler.setEnabled(false);
                 //oculta teclado
-                if(position!=PAGE_MAIN) {//solo cuando no esta en la pagina de busqueda
+                if (position != PAGE_MAIN) {//solo cuando no esta en la pagina de busqueda
                     Keyboard.hideKeyboard(MH_Principal.this);
                     searchView.setIconified(true);//oculta barra busqueda
                     //getRecyclerSugerencias().setBackgroundColor(getResources().getColor(R.color.colorTransparent));
                     //Toast.makeText(MH_Principal.this, "page " + (position + 1), Toast.LENGTH_SHORT).show();
                 }
-                if(position==PAGE_MAIN) {
+                if (position == PAGE_MAIN) {
                     Log.e("Buscar", String.valueOf(http.getListProdFramByLatLng().size()));
                     setSelectedItem(R.id.bottomMenuLupa);
                 }
-                if(position==PAGE_ENCONTRADOS) {
+                if (position == PAGE_ENCONTRADOS) {
                     Log.e("Encontrados", String.valueOf(http.getListProdFramByLatLng().size()));
 
-                    if(http.getListProdFramByLatLng().size()>0){
+                    if (http.getListProdFramByLatLng().size() > 0) {
                         //imagen_farmacoMenor=http.getListProdFramByLatLng().get(0).;
                         txtProductoMenor.setText("Fármaco: ".concat(http.getListProdFramByLatLng().get(0).getDetalleFarmaco().getNombreP())//+
                                 //" "+
                                 //http.getListProdFramByLatLng().get(0).getDetalleFarmaco().getConcent()
                         );
                         txtFarmaciaMenor.setText("Farmacia: ".concat(http.getListProdFramByLatLng().get(0).getDetalleFarmacias().getNombre()));
-                        txtPrecioMenor.setText("Precio: ".concat("S/."+http.getListProdFramByLatLng().get(0).getDetalleFarmaco().getPrecio().toString()+"c/u"));
-                        txtGenerico.setText("Genérico: ".concat(generico==null ? "No disponible" : generico));
+                        txtPrecioMenor.setText("Precio: ".concat("S/." + http.getListProdFramByLatLng().get(0).getDetalleFarmaco().getPrecio().toString() + "c/u"));
+                        txtGenerico.setText("Genérico: ".concat(generico == null ? "No disponible" : generico));
 
-                        if(oderSearch==ORDER_BY_DISTANCE_ASC)
+                        if (oderSearch == ORDER_BY_DISTANCE_ASC)
                             txtPriority.setText("MÁS CERCANA");
-                        else if(oderSearch==ORDER_BY_DISTANCE_DESC)
+                        else if (oderSearch == ORDER_BY_DISTANCE_DESC)
                             txtPriority.setText("MÁS LEJANA");
-                        else if(oderSearch==ORDER_BY_PRICE_ASC)
+                        else if (oderSearch == ORDER_BY_PRICE_ASC)
                             txtPriority.setText("MENOR PRECIO");
-                        else if(oderSearch==ORDER_BY_PRICE_DESC)
+                        else if (oderSearch == ORDER_BY_PRICE_DESC)
                             txtPriority.setText("MAYOR PRECIO");
 
-                        Log.e("P Actico... ",":"+generico);
-                    }
-                    else
-                    {
+                        Log.e("P Actico... ", ":" + generico);
+                    } else {
                         txtFarmaciaMenor.setText("");
                         txtFarmaciaMenor.setText("");
                         txtFarmaciaMenor.setText("");
@@ -285,22 +364,22 @@ public class MH_Principal extends MyGoogleApiActivity implements
                     adapterProductos.notifyDataSetChanged();
                     setSelectedItem(R.id.bottomMenuGPS);
                 }
-                if(position==PAGE_FAVORITE) {
+                if (position == PAGE_FAVORITE) {
                     Log.e("Favoritos", String.valueOf(http.getListProdFravoritos().size()));
                     //http.ActualizarFavoritos(id_session());
                     swipeRecycler.setEnabled(true);
                     setSelectedItem(R.id.bottomMenuFavoritos);
                 }
-                if(position==PAGE_NOTIFICACIONES) {
+                if (position == PAGE_NOTIFICACIONES) {
                     Log.e("Notificaciones", String.valueOf(http.getListaNotificaciones().size()));
                     notificationDefaultIcon(true);
                     //http.ActualizarFavoritos(id_session());
                     swipeRecycler.setEnabled(true);
                     setSelectedItem(R.id.bottomMenuNotificaciones);
                 }
-                if(position==PAGE_USER) {
+                if (position == PAGE_USER) {
                     Log.e("Usuario", String.valueOf(http.getListProdFravoritos().size()));
-                    if(!Preferences.getBoolean(Preferences.IS_DATA,MH_Principal.this))//si no hay data
+                    if (!Preferences.getBoolean(Preferences.IS_DATA, MH_Principal.this))//si no hay data
                         http.InformacionUsuario(id_session());
                     else
                         showDataUser();
@@ -309,10 +388,12 @@ public class MH_Principal extends MyGoogleApiActivity implements
                 }
 
             }
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
 
@@ -322,7 +403,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
 
 
         //FILTOR
-        bsAdapter=new MH_BottomSheetAdapter_FIlter(MH_Principal.this);
+        bsAdapter = new MH_BottomSheetAdapter_FIlter(MH_Principal.this);
 
         myTimer = new Timer();
         myTimer.schedule(new TimerTask() {
@@ -331,19 +412,17 @@ public class MH_Principal extends MyGoogleApiActivity implements
                 TimerMethod();
             }
 
-        }, 0, 10*60*1000);
+        }, 0, 10 * 60 * 1000);
 
         //CRENADO OYENTE BRAODCAST REVIER
         //creando el oyente a la interrupcion (MyFirebaseInstanceIDService)
         IntentFilter iFilter = new IntentFilter(Constants.BROADCAST_RECEIVER_GPS);
-        LocalBroadcastManager.getInstance(this).registerReceiver(gpsBroadcastReceiver,iFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(gpsBroadcastReceiver, iFilter);
 
         http.checkdataUser();
     }
-    //NotificationsTask nt;
-    private Timer myTimer;
-    private void TimerMethod()
-    {
+
+    private void TimerMethod() {
         //This method is called directly by the timer
         //and runs in the same thread as the timer.
 
@@ -351,55 +430,19 @@ public class MH_Principal extends MyGoogleApiActivity implements
         //through the runOnUiThread method.
         this.runOnUiThread(Timer_Tick);
     }
-    private Runnable Timer_Tick = new Runnable() {
-        public void run() {
-            http.VerificarNotificaciones(id_session());
 
-            //This method runs in the same thread as the UI.
-
-            //Do something to the UI thread here
-
-        }
-    };
-
-    ///LatLng broadcastLatLng;
-    /**
-     * se ejecuta cuando se tiene disponible el Token de firebase (ver>MyFirebaseInstanceIDService)
-     */
-    BroadcastReceiver gpsBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getBooleanExtra(Constants.UPDATE_LOCATION,false))//si llego mensaje del GPS
-            {
-                if(mViewPager.getCurrentItem()==PAGE_ENCONTRADOS) {
-                    Log.e("GPS Broadcast Receiver", "true");
-                    LatLng coord = getLatLng();
-                    myMaps.makeUserPosition(coord);
-                    myMaps.animateCameraWithOutZoom(coord);
-
-                    //PARA PRUEBAS EN VENEZUELA
-                    /*
-                    LatLng coordPruebasVzla=new LatLng(MyMaps.latPrueba,MyMaps.lngPrueba);
-                    myMaps.makeUserPosition(coordPruebasVzla);
-                    myMaps.animateCameraWithOutZoom(coordPruebasVzla);
-                    */
-                }
-            }
-        }
-    };
-
-    public void showDataUser(){
-        if(editTNombre!=null)
-            editTNombre.setText(Preferences.getString(Preferences.KEY_NAME,MH_Principal.this));
-        if(editApellido!=null)
-            editApellido.setText(Preferences.getString(Preferences.KEY_LAST_NAME,MH_Principal.this));
-        if(editEmail!=null)
-            editEmail.setText(Preferences.getString(Preferences.KEY_EMAIL,MH_Principal.this));
-        if(editTelefono!=null)
-            editTelefono.setText(Preferences.getString(Preferences.KEY_TELEFONO,MH_Principal.this));
-        if(txtNavNameUser!=null)
-            txtNavNameUser.setText(Preferences.getString(Preferences.KEY_NAME,MH_Principal.this)+" "+
-                    Preferences.getString(Preferences.KEY_LAST_NAME,MH_Principal.this));
+    public void showDataUser() {
+        if (editTNombre != null)
+            editTNombre.setText(Preferences.getString(Preferences.KEY_NAME, MH_Principal.this));
+        if (editApellido != null)
+            editApellido.setText(Preferences.getString(Preferences.KEY_LAST_NAME, MH_Principal.this));
+        if (editEmail != null)
+            editEmail.setText(Preferences.getString(Preferences.KEY_EMAIL, MH_Principal.this));
+        if (editTelefono != null)
+            editTelefono.setText(Preferences.getString(Preferences.KEY_TELEFONO, MH_Principal.this));
+        if (txtNavNameUser != null)
+            txtNavNameUser.setText(Preferences.getString(Preferences.KEY_NAME, MH_Principal.this) + " " +
+                    Preferences.getString(Preferences.KEY_LAST_NAME, MH_Principal.this));
     }
 
     public void setSelectedItem(int idMenu) {
@@ -407,73 +450,48 @@ public class MH_Principal extends MyGoogleApiActivity implements
         view.performClick();
     }
 
-/*
-    @CallSuper
-    public void setSelectedItem(int position) {
-        if (position >= getMenu().size() || position < 0) return;
-
-        View menuItemView = getMenuItemView(position);
-        if (menuItemView == null) return;
-        MenuItemImpl itemData = ((MenuView.ItemView) menuItemView).getItemData();
-
-
-        itemData.setChecked(true);
-
-        boolean previousHapticFeedbackEnabled = menuItemView.isHapticFeedbackEnabled();
-        menuItemView.setSoundEffectsEnabled(false);
-        menuItemView.setHapticFeedbackEnabled(false); //avoid hearing click sounds, disable haptic and restore settings later of that view
-        menuItemView.performClick();
-        menuItemView.setHapticFeedbackEnabled(previousHapticFeedbackEnabled);
-        menuItemView.setSoundEffectsEnabled(true);
-
-
-        mLastSelection = position;
-
-    }
-*/
-
-
     /**
      * MENU LATERAL e INFERIOR
+     *
      * @param item
      * @return
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
-        Log.e("NvigationItemSelected",String.valueOf(item.getItemId()));
+        Log.e("NvigationItemSelected", String.valueOf(item.getItemId()));
         int id = item.getItemId();
 
         if (item.getItemId() == R.id.bottomMenuLupa || item.getItemId() == R.id.navMenuLupa) {
-            Log.e(LOG,"Buscar");
-            if(mViewPager.getCurrentItem()!=PAGE_MAIN)
+            Log.e(LOG, "Buscar");
+            if (mViewPager.getCurrentItem() != PAGE_MAIN)
                 mViewPager.setCurrentItem(PAGE_MAIN);
         } else if (item.getItemId() == R.id.bottomMenuFavoritos || item.getItemId() == R.id.navMenuFavoritos) {
-            Log.e(LOG,"ir a Favoritos");
-            if(mViewPager.getCurrentItem()!=PAGE_FAVORITE)
+            Log.e(LOG, "ir a Favoritos");
+            if (mViewPager.getCurrentItem() != PAGE_FAVORITE)
                 mViewPager.setCurrentItem(PAGE_FAVORITE);
         } else if (item.getItemId() == R.id.bottomMenuNotificaciones || item.getItemId() == R.id.navMenuNotificaciones) {
-            if(mViewPager.getCurrentItem()!=PAGE_NOTIFICACIONES)
+            if (mViewPager.getCurrentItem() != PAGE_NOTIFICACIONES)
                 mViewPager.setCurrentItem(PAGE_NOTIFICACIONES);
-            Log.e(LOG,"ir a Notificaciones");
+            Log.e(LOG, "ir a Notificaciones");
         } else if (item.getItemId() == R.id.bottomMenuGPS) {
-            if(mViewPager.getCurrentItem()!=PAGE_ENCONTRADOS)
+            if (mViewPager.getCurrentItem() != PAGE_ENCONTRADOS)
                 mViewPager.setCurrentItem(PAGE_ENCONTRADOS);
-            Log.e(LOG,"ir a SMS");
+            Log.e(LOG, "ir a SMS");
         } else if (item.getItemId() == R.id.bottomMenuUsuario || item.getItemId() == R.id.navMenuUsuario) {
-            if(mViewPager.getCurrentItem()!=PAGE_USER)
+            if (mViewPager.getCurrentItem() != PAGE_USER)
                 mViewPager.setCurrentItem(PAGE_USER);
-            Log.e(LOG,"ir a MenuUsuario");
+            Log.e(LOG, "ir a MenuUsuario");
         } else if (id == R.id.nav_share2) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, " Hola! Encontré un app en la que puedes ahorrar comparando precios de medicamentos de marca vs genéricos, entra a https://app.zonngo.com/");
             startActivity(Intent.createChooser(intent, "Compartir con"));
-            Log.e(LOG,"Compartir");
+            Log.e(LOG, "Compartir");
         } else if (id == R.id.salir) {
             //http.Logout(id_session());
             showDialogoLogout(id_session());
-            Log.e(LOG,"Cerrar sesion");
+            Log.e(LOG, "Cerrar sesion");
         }
 
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -481,14 +499,9 @@ public class MH_Principal extends MyGoogleApiActivity implements
         return true;
     }
 
-
-
-    private SearchView searchView;
-    private EditText txtSearchSUgerencias;
-    String generico;//para evitar otra consulta, debio llegar en detalle de farmaco
-    //TextView txtGenericoMenor;
     /**
      * CREAR MENU DE OPCIONES
+     *
      * @param menu
      * @return
      */
@@ -503,17 +516,17 @@ public class MH_Principal extends MyGoogleApiActivity implements
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getResources().getString(R.string.busqueda_farmacos).concat("..."));
         //color para el place holder y texto
-        EditText txtSerach=(EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        EditText txtSerach = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         txtSerach.setHintTextColor(getResources().getColor(R.color.colorVerde));
         txtSerach.setTextColor(Color.BLACK);
 
         // Configura el boton cancelar
-        ImageView searchCloseIcon = (ImageView)searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchCloseIcon = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         //searchCloseIcon.setImageResource(R.drawable.ic_close_light);
         searchCloseIcon.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         // Configura el boton aceptar
         searchView.setSubmitButtonEnabled(true);
-        ImageView searchSubmit = (ImageView) searchView.findViewById (android.support.v7.appcompat.R.id.search_go_btn);
+        ImageView searchSubmit = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_go_btn);
         searchSubmit.setImageResource(R.drawable.ic_filter_list_white_24dp);
         searchSubmit.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         searchSubmit.setOnClickListener(new View.OnClickListener() {
@@ -527,7 +540,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
             }
         });
         // Configura el boton de busqueda
-        ImageView searchButton = (ImageView) searchView.findViewById (android.support.v7.appcompat.R.id.search_button);
+        ImageView searchButton = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
         searchButton.setImageResource(R.drawable.lupa_zonngo);
         searchButton.setColorFilter(getResources().getColor(R.color.colorVerde), PorterDuff.Mode.MULTIPLY);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -537,7 +550,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
             }
         });
         // Configura el editext de busqueda
-        txtSearchSUgerencias = ((EditText) searchView.findViewById (android.support.v7.appcompat.R.id.search_src_text));
+        txtSearchSUgerencias = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
         txtSearchSUgerencias.setInputType(InputType.TYPE_CLASS_TEXT);
         txtSearchSUgerencias.setTextSize(16);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -549,19 +562,20 @@ public class MH_Principal extends MyGoogleApiActivity implements
                 searchView.setIconified(true);
                 return true;
             }
+
             //Evento, cambio texto de búsqueda.
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.e("onTextChanged to",newText);
-                if(mViewPager.getCurrentItem()!=PAGE_MAIN)
+                Log.e("onTextChanged to", newText);
+                if (mViewPager.getCurrentItem() != PAGE_MAIN)
                     mViewPager.setCurrentItem(PAGE_MAIN);///va a la pagina de busqueda
                 if (newText.length() > 3) {
 
-                    if(new MyNetWork().checkNetworkConnection(MH_Principal.this))
+                    if (new MyNetWork().checkNetworkConnection(MH_Principal.this))
                         http.BusquedaSugerenciasCTM(newText, tipoSearch);
-                        //http.BusquedaSugerencias(newText);
-                    Log.e("hhhhhhhhhhhhhhhhhh",newText);
-                }else{
+                    //http.BusquedaSugerencias(newText);
+                    Log.e("hhhhhhhhhhhhhhhhhh", newText);
+                } else {
                     http.getListaSUgerencias().clear();
                 }
                 adapterSugerencias.notifyDataSetChanged();
@@ -574,254 +588,26 @@ public class MH_Principal extends MyGoogleApiActivity implements
         return super.onCreateOptionsMenu(menu);
     }
 
-
-    //contenedro mapa
-    LinearLayout contenMaps;
-    //String nombre;
-    EditText editTNombre=null;
-    EditText editApellido=null;
-    EditText editEmail=null;
-    EditText editTelefono=null;
-    EditText editPasswordAct =null;
-    EditText editPasswordNext =null;
-
-    Button btnUpdate;
-    SliderLayout mDemoSlider;
-
-
-    //Para medicamentos de menor rpecio
-    //ImageView imagen_farmacoMenor;
-    TextView txtProductoMenor;
-    TextView txtFarmaciaMenor;
-    TextView txtPrecioMenor;
-    TextView txtGenerico;
-    TextView txtPriority;
-    FloatingActionButton fab_maps;
-
-    SupportMapFragment mapFragment;
-    class MainPageAdapter extends PagerAdapter {
-        int numView=0;
-
-        public MainPageAdapter(int numView) {
-            this.numView = numView;
-            //viewFlipper = new View();
+    public void validateUpdate() {
+        if (editTNombre.getText().toString().isEmpty()) {
+            setLoginError("nombre es requerido", editTNombre);
+        } else if (editApellido.getText().toString().isEmpty()) {
+            setLoginError("apellido es requerida", editApellido);
+        } else if (editTelefono.getText().toString().isEmpty()) {
+            setLoginError("teléfono es requerido", editTelefono);
+        } else if (editPasswordAct.getText().toString().isEmpty()) {
+            setLoginError("clave es requerida", editPasswordAct);
+        } else {
+            http.UpdateDataUser(
+                    Preferences.getString(Preferences.KEY_SESION, MH_Principal.this),
+                    editTNombre.getText().toString(),
+                    editApellido.getText().toString(),
+                    editPasswordNext.getText().toString(),
+                    editTelefono.getText().toString(),
+                    editPasswordAct.getText().toString());
         }
-
-        @Override
-        public int getCount() {
-            return numView;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup collection, int position) {
-            View page = null;
-
-            //if (viewFlipper[position] == null) {
-                if(position==PAGE_MAIN){
-                    //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    viewFlipper = (RelativeLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_page_main, null);
-                    recyclerSugerencias = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerMain);
-                    recyclerSugerencias.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
-                    recyclerSugerencias.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
-                    recyclerSugerencias.setHasFixedSize(true);
-                    adapterSugerencias = new MH_AdapterSugerencias(http.getListaSUgerencias(), MH_Principal.this);
-                    adapterSugerencias.setRVOnItemClickListener(new MH_AdapterSugerencias.ItemsClickListener() {
-                        @Override
-                        public void onClickItem(View v, int position) {
-                            txtSearchSUgerencias.setText(http.getListaSUgerencias().get(position).getNombre().concat(" ").concat(http.getListaSUgerencias().get(position).getConcent()));
-                            if(getUbigeoSelected().size()==0)
-                                http.BusquedaFarmaciasPorProductoID(http.getListaSUgerencias().get(position).getId());
-                            else
-                                http.BusquedaFarmaciasPorUbigeo(http.getListaSUgerencias().get(position).getId(),getUbigeoSelected());
-                            generico=http.getListaSUgerencias().get(position).getPactivo();
-                            //MarcarFarmaciaLatLog(listaSUgerencias.get(position).getId());
-                            //http.getListaSUgerencias().clear();
-                            adapterSugerencias.notifyDataSetChanged();
-                        }
-                    });
-                    recyclerSugerencias.setAdapter(adapterSugerencias);
-
-                    LinearLayout linear= (LinearLayout) viewFlipper.findViewById(R.id.pageMainBack);
-                    mDemoSlider = (SliderLayout) linear.findViewById(R.id.mh_slider);
-                    SlidePresentacion();
-
-                } else if (position==PAGE_ENCONTRADOS){
-                    if(viewFlipperMaps==null) {//para no reinflar el mapa
-                        //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        viewFlipperMaps = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
-                        LinearLayout linearMaps = (LinearLayout) viewFlipperMaps.findViewById(R.id.LinearMaps);
-                        CoordinatorLayout contenMapa = (CoordinatorLayout) linearMaps.findViewById(R.id.contenMapa);
-
-                        LinearLayout btnCercana = (LinearLayout) viewFlipperMaps.findViewById(R.id.btnCercana);
-                        btnCercana.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //http.getListProdFramByLatLng().get(0).
-                                    //myMaps.createRouteToPharmacy(getLatLng(),http.getListProdFramByLatLng().get(0));
-                                    if(http.getListProdFramByLatLng().size()>0) {
-                                        createRoute(0);
-                                    }else{
-                                        Toast.makeText(MH_Principal.this,"No hay nuevas busquedas",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-                        );
-                        //imagen_farmacoMenor = (ImageView) viewFlipperMaps.findViewById(R.id.imagen_farmaco2);
-                        txtProductoMenor = (TextView) linearMaps.findViewById(R.id.txtProducto);
-                        txtFarmaciaMenor = (TextView) linearMaps.findViewById(R.id.txtFarmacia);
-                        txtPrecioMenor = (TextView) linearMaps.findViewById(R.id.txtPrecio);
-                        txtGenerico = (TextView) linearMaps.findViewById(R.id.txtGenerico);
-                        txtPriority = (TextView) linearMaps.findViewById(R.id.txtPriority);
-
-                        fab_maps = (FloatingActionButton) linearMaps.findViewById(R.id.fab_maps);
-                        fab_maps.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.e("setOnClickListener", "hola");
-                                if (http.getListProdFramByLatLng().size() > 0) {
-                                    showListFinds();
-                                } else {
-                                    Toast.makeText(MH_Principal.this, "No hay nuevas busquedas disponibles", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                        //CREANDO MAPA
-                        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                                .findFragmentById(R.id.myLayoutMap);
-                        mapFragment.getMapAsync(MH_Principal.this);
-                    }
-                    //////////////////
-                } else if (position==PAGE_FAVORITE){
-                    viewFlipper = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_recycler_view, null);
-                    recyclerFavoritos = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerProductos);
-                    TextView tvTitulo= (TextView) viewFlipper.findViewById(R.id.tvTitulo);
-                    tvTitulo.setText("FAVORITOS");
-                    recyclerFavoritos.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
-                    recyclerFavoritos.setHasFixedSize(true);
-                    //
-                    adapterFavoritos.setRVOnItemClickListener(new MH_AdapterListFavorito.ItemsClickListener() {
-                        @Override
-                        public void onClickItem(View v, int position) {
-                            Log.e("onFavoriteClick List","Pos: "+position);
-                        }
-                    });
-                    adapterFavoritos.setRVOnDeleteFavoriteClickListener(new MH_AdapterListFavorito.ItemsDeleteFavoriteClickListener() {
-                        @Override
-                        public void onDeleteFavoriteClick(View v, int position) {
-                            Log.e("onDeleteFavoriteClick","Pos: "+position);
-                            http.EliminarFavoritos(id_session(),http.getListProdFravoritos().get(position).getId());
-                            //http.getListProdFramByLatLng().get(position).changeFavorite();
-                        }
-                    });
-                    recyclerFavoritos.setAdapter(adapterFavoritos);
-
-                } else if (position==PAGE_NOTIFICACIONES){
-                    viewFlipper = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_recycler_view, null);
-                    recyclerNotificaciones = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerProductos);
-                    TextView tvTitulo= (TextView) viewFlipper.findViewById(R.id.tvTitulo);
-                    tvTitulo.setText("NOTIFICACIONES");
-
-                    recyclerNotificaciones.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
-                    recyclerNotificaciones.setHasFixedSize(true);
-                    //
-                    adapterNotificaciones.setRVOnItemClickListener(new MH_AdapterListFavorito.ItemsClickListener() {
-                        @Override
-                        public void onClickItem(View v, int position) {
-                            Log.e("onNotif.Click List","Pos: "+position);
-                        }
-                    });
-                    recyclerNotificaciones.setAdapter(adapterNotificaciones);
-
-
-                } else if (position==PAGE_USER){
-                    viewFlipper = (ScrollView) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_update_data_user, null);
-                    //TextView tvTitulo= (TextView) viewFlipper[position].findViewById(R.id.tvTitulo);
-                    //tvTitulo.setText("ACTUALIZAR DATOS");
-                    editTNombre=(EditText)viewFlipper.findViewById(R.id.txtNombreUpd);
-                    editApellido=(EditText)viewFlipper.findViewById(R.id.editApellidoUpd);
-                    editEmail=(EditText)viewFlipper.findViewById(R.id.txtEmailAddressUpd);
-                    editTelefono=(EditText)viewFlipper.findViewById(R.id.txtTelefonoUpd);
-                    editPasswordAct =(EditText)viewFlipper.findViewById(R.id.txtPwdAct);
-                    editPasswordNext =(EditText)viewFlipper.findViewById(R.id.txtPwdNext);
-                    btnUpdate =(Button) viewFlipper.findViewById(R.id.btnUpd);
-                    btnUpdate.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            validateUpdate();
-                        }
-                    });
-
-
-
-
-                }/* else if (position==5){//DE PRUEBA QUITAR
-                    //viewFlipper[position] = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
-                    viewFlipper[position] = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
-
-                    //CREANDO MAPA
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.myLayoutMap);
-                    mapFragment.getMapAsync(MH_Principal.this);
-                }*/
-            //}
-            if(position==PAGE_ENCONTRADOS){
-                page = viewFlipperMaps;
-
-            }
-            else {
-                page = viewFlipper;
-
-            }
-
-
-            collection.addView(page, 0);
-            return page;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            //container.removeView(object.get(position ));
-            //super.destroyItem(container, position, object);
-            container.removeView((View) object);
-            Log.e("destroyItem",String.valueOf(position));
-
-        }
-/*
-        @Override
-        public void destroyItem(View collection, int position, Object view) {
-            Log.e("destroyItem",String.valueOf(position));
-            ((ViewPager) collection).removeView((View) view);
-            //viewFlipper[position]=null;
-        }*/
     }
 
-    public void validateUpdate(){
-            if (editTNombre.getText().toString().isEmpty()) {
-                setLoginError("nombre es requerido", editTNombre);
-            } else if (editApellido.getText().toString().isEmpty()) {
-                setLoginError("apellido es requerida", editApellido);
-            } else if (editTelefono.getText().toString().isEmpty()) {
-                setLoginError("teléfono es requerido", editTelefono);
-            } else if (editPasswordAct.getText().toString().isEmpty()) {
-                setLoginError("clave es requerida", editPasswordAct);
-            } else {
-                http.UpdateDataUser(
-                        Preferences.getString(Preferences.KEY_SESION,MH_Principal.this),
-                        editTNombre.getText().toString(),
-                        editApellido.getText().toString(),
-                        editPasswordNext.getText().toString(),
-                        editTelefono.getText().toString(),
-                        editPasswordAct.getText().toString());
-            }
-    }
-
-    private View focusView = null;
     private void setLoginError(String error, TextView input) {
         input.setError(null);
 
@@ -861,7 +647,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
                     //.description(name)
                     .image(file_maps.get(name))
                     .setScaleType(BaseSliderView.ScaleType.Fit);
-                    //.setOnSliderClickListener(this);
+            //.setOnSliderClickListener(this);
 
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
@@ -893,7 +679,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
     }
 
     public String id_session() {
-        return Preferences.getString(Preferences.KEY_SESION,MH_Principal.this);
+        return Preferences.getString(Preferences.KEY_SESION, MH_Principal.this);
     }
 
     public void showDialogoLogout(final String idSesion) {
@@ -903,13 +689,13 @@ public class MH_Principal extends MyGoogleApiActivity implements
         alertDialog.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String typeLogin= Preferences.getTypeLogin(MH_Principal.this);
-                switch (typeLogin){
+                String typeLogin = Preferences.getTypeLogin(MH_Principal.this);
+                switch (typeLogin) {
                     case Preferences.LOGIN_EMAIL:
                         http.Logout(idSesion);
                         break;
                     case Preferences.LOGIN_FACEBOOK:
-                        if(!FacebookSdk.isInitialized())
+                        if (!FacebookSdk.isInitialized())
                             FacebookSdk.sdkInitialize(getApplicationContext());
                         disconnectFromFacebook(idSesion);
                         break;
@@ -917,7 +703,6 @@ public class MH_Principal extends MyGoogleApiActivity implements
                         signOut();
                         break;
                 }
-
 
 
             }
@@ -931,12 +716,10 @@ public class MH_Principal extends MyGoogleApiActivity implements
         alertDialog.show();
     }
 
-
-    private ProgressDialog loading;
     public void disconnectFromFacebook(final String idSesion) {
         loading = ProgressDialog.show(MH_Principal.this, "Cargando", "Por favor espere", false, false);
         if (AccessToken.getCurrentAccessToken() == null) {
-            Log.e("disconnectFromFacebook","AccessToken.getCurrentAccessToken() == null");
+            Log.e("disconnectFromFacebook", "AccessToken.getCurrentAccessToken() == null");
             //http.Logout(idSesion);
             loading.dismiss();
             gotoPresentacion();
@@ -949,7 +732,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
             @Override
             public void onCompleted(GraphResponse graphResponse) {
 
-                Log.e("disconnectFromFacebook","onCompleted");
+                Log.e("disconnectFromFacebook", "onCompleted");
                 LoginManager.getInstance().logOut();
                 loading.dismiss();
 
@@ -975,11 +758,13 @@ public class MH_Principal extends MyGoogleApiActivity implements
         super.onStop();
         MyDialoges.dismissProgressDialog();
     }
+
     private void signIn() {
         Log.e(TAG, "signIn()");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     public void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
@@ -994,12 +779,12 @@ public class MH_Principal extends MyGoogleApiActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e("requed  code",String.valueOf(requestCode));
-        Log.e("resul  code",String.valueOf(resultCode));
+        Log.e("requed  code", String.valueOf(requestCode));
+        Log.e("resul  code", String.valueOf(resultCode));
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        }else if(requestCode==64206){
+        } else if (requestCode == 64206) {
 
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
@@ -1021,7 +806,8 @@ public class MH_Principal extends MyGoogleApiActivity implements
         }
 
     }
-    private void gotoPresentacion(){
+
+    private void gotoPresentacion() {
         Preferences.logOutpPreferences(MH_Principal.this);
         Intent salir = new Intent(getApplicationContext(), MH_Activity_Presentacion.class);
         startActivity(salir);
@@ -1037,10 +823,8 @@ public class MH_Principal extends MyGoogleApiActivity implements
         MyDialoges.dismissProgressDialog();
     }
 
-    Intent moreInfoIntent;
-
-    public void infoNewNotifications(MH_DataModel_Notificaciones listaNotificaciones){
-        moreInfoIntent=new Intent(this, MH_Principal.class)
+    public void infoNewNotifications(MH_DataModel_Notificaciones listaNotificaciones) {
+        moreInfoIntent = new Intent(this, MH_Principal.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(listaNotificaciones.getId(), "1");
 
@@ -1053,9 +837,8 @@ public class MH_Principal extends MyGoogleApiActivity implements
                 getResources().getString(R.string.msg_notify)
         );
 
-        if(mViewPager.getCurrentItem()!=PAGE_NOTIFICACIONES)
+        if (mViewPager.getCurrentItem() != PAGE_NOTIFICACIONES)
             notificationDefaultIcon(false);
-
 
 
         //ic_flag_white_36dp_on
@@ -1071,12 +854,12 @@ public class MH_Principal extends MyGoogleApiActivity implements
                     }}).show();*/
     }
 
-    public void notificationDefaultIcon(boolean value){
+    public void notificationDefaultIcon(boolean value) {
         MenuItem item = (MenuItem) bNavigation.getMenu().findItem(R.id.bottomMenuNotificaciones);
         item.setIcon(value ? (R.drawable.ic_flag_white_36dp) : (R.drawable.ic_flag_white_36dp_on));
     }
 
-    private void showListFinds(){
+    private void showListFinds() {
         View alertLayout = getLayoutInflater().inflate(R.layout.mh_recycler_view_modal, null);
         //LinearLayout btnTranpTop = (LinearLayout) alertLayout.findViewById(R.id.btnTranpTop);
         recyclerProductos = (RecyclerView) alertLayout.findViewById(R.id.RecyclerProductosFinds);
@@ -1099,7 +882,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
         adapterProductos.setRVOnItemClickListener(new MH_AdapterProdByUbication.ItemsClickListener() {
             @Override
             public void onClickItem(View v, int position) {
-                Log.e("onClickItem: Lsita","Pos: "+position);
+                Log.e("onClickItem: Lsita", "Pos: " + position);
                 //crear la marca de esta farmacia
                 //mViewPager.setCurrentItem(5);
                 alert.cancel();
@@ -1113,13 +896,13 @@ public class MH_Principal extends MyGoogleApiActivity implements
         adapterProductos.setRVOnItemsFavoriteClickListener(new MH_AdapterProdByUbication.ItemsFavoriteClickListener() {
             @Override
             public void onFavoriteClick(View v, int position, Boolean favorite) {
-                Log.e("onFavoriteClick","Pos: "+position);
+                Log.e("onFavoriteClick", "Pos: " + position);
                 ///IR A BASE DE DATOS
                 //int idProducto = http.getListProdFramByLatLng().get(position).getDetalleFarmaco().getIdP();
-                if(!favorite)
-                    http.EliminarFavoritos(id_session(),http.getListProdFramByLatLng().get(position).getDetalleFarmaco().getIdP());
+                if (!favorite)
+                    http.EliminarFavoritos(id_session(), http.getListProdFramByLatLng().get(position).getDetalleFarmaco().getIdP());
                 else
-                    http.AgregarFavoritos(id_session(),http.getListProdFramByLatLng().get(position).getDetalleFarmaco().getIdP());
+                    http.AgregarFavoritos(id_session(), http.getListProdFramByLatLng().get(position).getDetalleFarmaco().getIdP());
 
                 //http.ActualizarFavoritos(id_session());
             }
@@ -1132,7 +915,7 @@ public class MH_Principal extends MyGoogleApiActivity implements
 
     }
 
-    public void createRoute(int position){
+    public void createRoute(int position) {
         myMaps.getmMap().clear();
         myMaps.makePharmaciesPosition(http.getListProdFramByLatLng());
 
@@ -1141,19 +924,19 @@ public class MH_Principal extends MyGoogleApiActivity implements
         myMaps.createRouteToPharmacy(vzla,http.getListProdFramByLatLng().get(position));
         myMaps.makeUserPosition(vzla);*/
         LatLng coord = getLatLng();
-        myMaps.createRouteToPharmacy(coord,http.getListProdFramByLatLng().get(position));
+        myMaps.createRouteToPharmacy(coord, http.getListProdFramByLatLng().get(position));
         myMaps.makeUserPosition(coord);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.e("onKeyDown()","0");
+        Log.e("onKeyDown()", "0");
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            Log.e("onKeyDown()","1");
-            boolean noBack=false;
-            noBack=closeBottonSheet();
-            if(!noBack) {
-                Log.e("onKeyDown()","2");
+            Log.e("onKeyDown()", "1");
+            boolean noBack = false;
+            noBack = closeBottonSheet();
+            if (!noBack) {
+                Log.e("onKeyDown()", "2");
                 //onBackPressed();
                 gotoMain();
             }
@@ -1162,17 +945,17 @@ public class MH_Principal extends MyGoogleApiActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    public boolean closeBottonSheet(){
-        Log.e("closeBottonSheet()","0");
-        if(bsAdapter.isOpened()) {
-            Log.e("closeBottonSheet()","1");
+    public boolean closeBottonSheet() {
+        Log.e("closeBottonSheet()", "0");
+        if (bsAdapter.isOpened()) {
+            Log.e("closeBottonSheet()", "1");
             bsAdapter.setHidden();
             return true;
         }
         return false;
     }
 
-    public void gotoMain(){
+    public void gotoMain() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1217,13 +1000,211 @@ public class MH_Principal extends MyGoogleApiActivity implements
         return adapterNotificaciones;
     }
 
-
     public List<MH_DataModel_Ubigeo> getUbigeoSelected() {
         return ubigeoSelected;
     }
 
     public void setUbigeoSelected(List<MH_DataModel_Ubigeo> ubigeoSelected) {
         this.ubigeoSelected = ubigeoSelected;
+    }
+
+    class MainPageAdapter extends PagerAdapter {
+        int numView = 0;
+
+        public MainPageAdapter(int numView) {
+            this.numView = numView;
+            //viewFlipper = new View();
+        }
+
+        @Override
+        public int getCount() {
+            return numView;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup collection, int position) {
+            View page = null;
+
+            //if (viewFlipper[position] == null) {
+            if (position == PAGE_MAIN) {
+                //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                viewFlipper = (RelativeLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_page_main, null);
+                recyclerSugerencias = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerMain);
+                recyclerSugerencias.setBackgroundColor(getResources().getColor(R.color.colorTransparent));
+                recyclerSugerencias.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
+                recyclerSugerencias.setHasFixedSize(true);
+                adapterSugerencias = new MH_AdapterSugerencias(http.getListaSUgerencias(), MH_Principal.this);
+                adapterSugerencias.setRVOnItemClickListener(new MH_AdapterSugerencias.ItemsClickListener() {
+                    @Override
+                    public void onClickItem(View v, int position) {
+                        txtSearchSUgerencias.setText(http.getListaSUgerencias().get(position).getNombre().concat(" ").concat(http.getListaSUgerencias().get(position).getConcent()));
+                        if (getUbigeoSelected().size() == 0)
+                            http.BusquedaFarmaciasPorProductoID(http.getListaSUgerencias().get(position).getId());
+                        else
+                            http.BusquedaFarmaciasPorUbigeo(http.getListaSUgerencias().get(position).getId(), getUbigeoSelected());
+                        generico = http.getListaSUgerencias().get(position).getPactivo();
+                        //MarcarFarmaciaLatLog(listaSUgerencias.get(position).getId());
+                        //http.getListaSUgerencias().clear();
+                        adapterSugerencias.notifyDataSetChanged();
+                    }
+                });
+                recyclerSugerencias.setAdapter(adapterSugerencias);
+
+                LinearLayout linear = (LinearLayout) viewFlipper.findViewById(R.id.pageMainBack);
+                mDemoSlider = (SliderLayout) linear.findViewById(R.id.mh_slider);
+                SlidePresentacion();
+
+            } else if (position == PAGE_ENCONTRADOS) {
+                if (viewFlipperMaps == null) {//para no reinflar el mapa
+                    //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    viewFlipperMaps = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
+                    LinearLayout linearMaps = (LinearLayout) viewFlipperMaps.findViewById(R.id.LinearMaps);
+                    CoordinatorLayout contenMapa = (CoordinatorLayout) linearMaps.findViewById(R.id.contenMapa);
+
+                    LinearLayout btnCercana = (LinearLayout) viewFlipperMaps.findViewById(R.id.btnCercana);
+                    btnCercana.setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //http.getListProdFramByLatLng().get(0).
+                                    //myMaps.createRouteToPharmacy(getLatLng(),http.getListProdFramByLatLng().get(0));
+                                    if (http.getListProdFramByLatLng().size() > 0) {
+                                        createRoute(0);
+                                    } else {
+                                        Toast.makeText(MH_Principal.this, "No hay nuevas busquedas", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                    );
+                    //imagen_farmacoMenor = (ImageView) viewFlipperMaps.findViewById(R.id.imagen_farmaco2);
+                    txtProductoMenor = (TextView) linearMaps.findViewById(R.id.txtProducto);
+                    txtFarmaciaMenor = (TextView) linearMaps.findViewById(R.id.txtFarmacia);
+                    txtPrecioMenor = (TextView) linearMaps.findViewById(R.id.txtPrecio);
+                    txtGenerico = (TextView) linearMaps.findViewById(R.id.txtGenerico);
+                    txtPriority = (TextView) linearMaps.findViewById(R.id.txtPriority);
+
+                    fab_maps = (FloatingActionButton) linearMaps.findViewById(R.id.fab_maps);
+                    fab_maps.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.e("setOnClickListener", "hola");
+                            if (http.getListProdFramByLatLng().size() > 0) {
+                                showListFinds();
+                            } else {
+                                Toast.makeText(MH_Principal.this, "No hay nuevas busquedas disponibles", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    //CREANDO MAPA
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.myLayoutMap);
+                    mapFragment.getMapAsync(MH_Principal.this);
+                }
+                //////////////////
+            } else if (position == PAGE_FAVORITE) {
+                viewFlipper = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_recycler_view, null);
+                recyclerFavoritos = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerProductos);
+                TextView tvTitulo = (TextView) viewFlipper.findViewById(R.id.tvTitulo);
+                tvTitulo.setText("FAVORITOS");
+                recyclerFavoritos.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
+                recyclerFavoritos.setHasFixedSize(true);
+                //
+                adapterFavoritos.setRVOnItemClickListener(new MH_AdapterListFavorito.ItemsClickListener() {
+                    @Override
+                    public void onClickItem(View v, int position) {
+                        Log.e("onFavoriteClick List", "Pos: " + position);
+                    }
+                });
+                adapterFavoritos.setRVOnDeleteFavoriteClickListener(new MH_AdapterListFavorito.ItemsDeleteFavoriteClickListener() {
+                    @Override
+                    public void onDeleteFavoriteClick(View v, int position) {
+                        Log.e("onDeleteFavoriteClick", "Pos: " + position);
+                        http.EliminarFavoritos(id_session(), http.getListProdFravoritos().get(position).getId());
+                        //http.getListProdFramByLatLng().get(position).changeFavorite();
+                    }
+                });
+                recyclerFavoritos.setAdapter(adapterFavoritos);
+
+            } else if (position == PAGE_NOTIFICACIONES) {
+                viewFlipper = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_recycler_view, null);
+                recyclerNotificaciones = (RecyclerView) viewFlipper.findViewById(R.id.RecyclerProductos);
+                TextView tvTitulo = (TextView) viewFlipper.findViewById(R.id.tvTitulo);
+                tvTitulo.setText("NOTIFICACIONES");
+
+                recyclerNotificaciones.setLayoutManager(new LinearLayoutManager(MH_Principal.this));
+                recyclerNotificaciones.setHasFixedSize(true);
+                //
+                adapterNotificaciones.setRVOnItemClickListener(new MH_AdapterListFavorito.ItemsClickListener() {
+                    @Override
+                    public void onClickItem(View v, int position) {
+                        Log.e("onNotif.Click List", "Pos: " + position);
+                    }
+                });
+                recyclerNotificaciones.setAdapter(adapterNotificaciones);
+
+
+            } else if (position == PAGE_USER) {
+                viewFlipper = (ScrollView) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_update_data_user, null);
+                //TextView tvTitulo= (TextView) viewFlipper[position].findViewById(R.id.tvTitulo);
+                //tvTitulo.setText("ACTUALIZAR DATOS");
+                editTNombre = (EditText) viewFlipper.findViewById(R.id.txtNombreUpd);
+                editApellido = (EditText) viewFlipper.findViewById(R.id.editApellidoUpd);
+                editEmail = (EditText) viewFlipper.findViewById(R.id.txtEmailAddressUpd);
+                editTelefono = (EditText) viewFlipper.findViewById(R.id.txtTelefonoUpd);
+                editPasswordAct = (EditText) viewFlipper.findViewById(R.id.txtPwdAct);
+                editPasswordNext = (EditText) viewFlipper.findViewById(R.id.txtPwdNext);
+                btnUpdate = (Button) viewFlipper.findViewById(R.id.btnUpd);
+                btnUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        validateUpdate();
+                    }
+                });
+
+
+            }/* else if (position==5){//DE PRUEBA QUITAR
+                    //viewFlipper[position] = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
+                    viewFlipper[position] = (LinearLayout) LayoutInflater.from(MH_Principal.this).inflate(R.layout.mh_fragment_maps, null);
+
+                    //CREANDO MAPA
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.myLayoutMap);
+                    mapFragment.getMapAsync(MH_Principal.this);
+                }*/
+            //}
+            if (position == PAGE_ENCONTRADOS) {
+                page = viewFlipperMaps;
+
+            } else {
+                page = viewFlipper;
+
+            }
+
+
+            collection.addView(page, 0);
+            return page;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            //container.removeView(object.get(position ));
+            //super.destroyItem(container, position, object);
+            container.removeView((View) object);
+            Log.e("destroyItem", String.valueOf(position));
+
+        }
+/*
+        @Override
+        public void destroyItem(View collection, int position, Object view) {
+            Log.e("destroyItem",String.valueOf(position));
+            ((ViewPager) collection).removeView((View) view);
+            //viewFlipper[position]=null;
+        }*/
     }
 
 

@@ -16,8 +16,7 @@ import android.support.v7.app.NotificationCompat;
 public class MH_ManagerNotificacion {
 
 
-
-    public void showNotificationCompat(Context myContext, int id_session, Intent myIntent, int iconId, String title, String contentText){
+    public void showNotificationCompat(Context myContext, int id_session, Intent myIntent, int iconId, String title, String contentText) {
         //NOTIFICACION SIMPLE
         NotificationCompat.Builder notificationBuilder
                 = (NotificationCompat.Builder) new NotificationCompat.Builder(myContext)

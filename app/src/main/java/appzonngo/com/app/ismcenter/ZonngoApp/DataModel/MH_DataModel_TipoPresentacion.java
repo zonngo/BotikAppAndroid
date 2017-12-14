@@ -1,4 +1,3 @@
-
 package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 import java.util.HashMap;
@@ -11,36 +10,28 @@ public class MH_DataModel_TipoPresentacion {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The descripcion
+     * @return The descripcion
      */
     public String getDescripcion() {
         return descripcion;
     }
 
     /**
-     * 
-     * @param descripcion
-     *     The descripcion
+     * @param descripcion The descripcion
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;

@@ -1,16 +1,24 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    signingConfigs {
+        config {
+            keyAlias 'zonngoappkey'
+            keyPassword 'Zonngo_App_2017'
+            storeFile file('/home/vcueva/Projects/BotikApp/BotikAppAndroid/jks/zonngoapp.jks')
+            storePassword 'Zonngo_App_2017'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     dexOptions {//RESUELVE PROBLEMA DE MEMORIA AL GENERAR .APK
         javaMaxHeapSize "4g"
     }
     defaultConfig {
         applicationId "appzonngo.com.app.ismcenter.zonngo2"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 3
+        targetSdkVersion 26
+        versionCode 5
         versionName '1.2'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -30,15 +38,14 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     //compile(name: 'material-search', ext: 'aar')
     compile files('universal-image-loader-1.9.5.jar')
     //AGREGADO
     //respuestas de backend
     // Serialization
     /*BagOfPrimitives obj = new BagOfPrimitives();
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);*/
+                    Gson gson = new Gson();
+                    String json = gson.toJson(obj);*/
     // Deserialization
     /*BagOfPrimitives obj2 = gson.fromJson(json, BagOfPrimitives.class);*/
     //PARA RUTAS MAPA
@@ -53,13 +60,13 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'org.adw.library:discrete-seekbar:1.0.1'
-    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services:11.0.4'
     compile 'com.github.paolorotolo:appintro:4.0.0'
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:support-v4:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'org.glassfish:javax.annotation:10.0-b28'
     compile 'cn.carbs.android:AvatarImageView:1.0.2'
     compile 'com.github.ivbaranov:materialfavoritebutton:0.1.2'

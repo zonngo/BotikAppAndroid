@@ -6,6 +6,7 @@ package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 public class MH_DataModel_RecupClave {
     String email;
+
     public String getEmail() {
         return email;
     }

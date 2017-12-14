@@ -10,7 +10,7 @@ import android.content.Context;
 public class MyDialoges {
     private static ProgressDialog pDialog;
 
-    public static void showProgressDialog(Context myContext, String msg){
+    public static void showProgressDialog(Context myContext, String msg) {
         pDialog = new ProgressDialog(myContext);
         pDialog.setMessage(msg);
         pDialog.setCancelable(true);
@@ -18,8 +18,8 @@ public class MyDialoges {
         pDialog.show();
     }
 
-    public static void dismissProgressDialog(){
-        if(pDialog!=null)
+    public static void dismissProgressDialog() {
+        if (pDialog != null)
             pDialog.dismiss();
     }
 

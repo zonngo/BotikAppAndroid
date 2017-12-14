@@ -33,11 +33,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-
 import com.google.android.gms.maps.model.LatLng;
 
-import appzonngo.com.app.ismcenter.zonngo2.R;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.Utilities.Constants;
+import appzonngo.com.app.ismcenter.zonngo2.R;
 
 public class MyGoogleApiActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -47,8 +46,6 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
 
     //private LatLng latLng;
 
-    private AppCompatActivity myContext=MyGoogleApiActivity.this;
-    private static String TAG = GPSCoordenates.class.getName(); //get Name class
     // Códigos de petición
     private static final int REQUEST_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
@@ -56,22 +53,18 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
     private static final String LOCATION_KEY = "location-key";
     private static final long UPDATE_INTERVAL = 3000;
     private static final long UPDATE_FASTEST_INTERVAL = UPDATE_INTERVAL / 2;
-
+    private static final int REQUEST_PERMISSIONS_ACCESS_FINE_LOCATION = 10;
+    private static String TAG = GPSCoordenates.class.getName(); //get Name class
+    private static GoogleApiClient apiClient;
+    private AppCompatActivity myContext = MyGoogleApiActivity.this;
     private Location mLastLocation;
     private LocationRequest mLocationRequest;
     private LocationSettingsRequest mLocationSettingsRequest;
     private double mLatitude;
     private double mLongitude;
-
-    private boolean cordinatesReady =false;
-    private static GoogleApiClient apiClient;
-
+    private boolean cordinatesReady = false;
     private MyPermissions mPermissions;
-
-    private static final int REQUEST_PERMISSIONS_ACCESS_FINE_LOCATION= 10;
-
-
-    private String[] MANIFEST_PERMISSIONS_GPS={
+    private String[] MANIFEST_PERMISSIONS_GPS = {
             Manifest.permission.ACCESS_FINE_LOCATION
     };
 
@@ -83,21 +76,21 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
             REQUEST_PERMISSIONS_ACCESS_FINE_LOCATION
     };
 
-    public void createAPI_Google(Bundle savedInstanceState, View viewSnackBar){
-        mPermissions=new MyPermissions(this, viewSnackBar, MANIFEST_PERMISSIONS_GPS, REQUEST_PERMISSIONS_GPS, MSG_DENIED_PERMISSIONS_GPS);
+    public void createAPI_Google(Bundle savedInstanceState, View viewSnackBar) {
+        mPermissions = new MyPermissions(this, viewSnackBar, MANIFEST_PERMISSIONS_GPS, REQUEST_PERMISSIONS_GPS, MSG_DENIED_PERMISSIONS_GPS);
 
         //if(mPermissions.obtainPermissions()) {//si se activan los permisos GPS
-            myDebug.showLog_d("MyGoogleApiActivity-> createAPI_Google: ", " ON ");
-            // Establecer punto de entrada para la API de ubicación
-            buildGoogleApiClient();
-            // Crear configuración de peticiones
-            createLocationRequest();
-            // Crear opciones de peticiones
-            buildLocationSettingsRequest();
-            // Verificar ajustes de ubicación actuales
-            checkLocationSettings();
-            // recupera la ultima ubicacion conocida antes de minimizar la actividad
-            updateValuesFromBundle(savedInstanceState);
+        myDebug.showLog_d("MyGoogleApiActivity-> createAPI_Google: ", " ON ");
+        // Establecer punto de entrada para la API de ubicación
+        buildGoogleApiClient();
+        // Crear configuración de peticiones
+        createLocationRequest();
+        // Crear opciones de peticiones
+        buildLocationSettingsRequest();
+        // Verificar ajustes de ubicación actuales
+        checkLocationSettings();
+        // recupera la ultima ubicacion conocida antes de minimizar la actividad
+        updateValuesFromBundle(savedInstanceState);
         //}
     }
 
@@ -130,7 +123,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
     }
 
     /**
-     *  especifica los servicios de ubicación que la app usará
+     * especifica los servicios de ubicación que la app usará
      */
     public void buildLocationSettingsRequest() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
@@ -181,6 +174,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
     /**
      * Se obtiene la info guardada al minimizar la app, se accede
      * con la llave LOCATION_KEY (mLastLocation)
+     *
      * @param savedInstanceState
      */
     public void updateValuesFromBundle(Bundle savedInstanceState) {
@@ -195,6 +189,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
 
     /**
      * Determina si el cliente esta conectado a la API de google
+     *
      * @param bundle
      */
     @Override
@@ -208,6 +203,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
 
     /**
      * Determina si el cliente esta desconectado a la API de google
+     *
      * @param i
      */
     @Override
@@ -218,12 +214,13 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
 
     /**
      * procesa posible errores de conexion
+     *
      * @param connectionResult
      */
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(myContext, "Error de conexion!", Toast.LENGTH_SHORT).show();
-        myDebug.showLog_d("myGoogleApi-> GoogleSignIn","\"OnConnectionFailed: \"" + connectionResult);
+        myDebug.showLog_d("myGoogleApi-> GoogleSignIn", "\"OnConnectionFailed: \"" + connectionResult);
     }
 
     /**
@@ -240,7 +237,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
      * Si tiene permisos, obtiene la ultima ubicacion conocida
      */
     private void getLastLocation() {
-        if(mPermissions.obtainPermissions()){
+        if (mPermissions.obtainPermissions()) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(apiClient);
         }
     }
@@ -249,7 +246,7 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
      * activa la actualizacion de coordenadas segun la configuracion "mLocationRequest"
      */
     private void startLocationUpdates() {
-        if(mPermissions.obtainPermissions()){
+        if (mPermissions.obtainPermissions()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
         }
     }
@@ -258,8 +255,8 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
      * refrezca la ultima ubicacion conocida
      */
     private void updateLocationUI() {
-        mLatitude=mLastLocation.getLatitude();
-        mLongitude=mLastLocation.getLongitude();
+        mLatitude = mLastLocation.getLatitude();
+        mLongitude = mLastLocation.getLongitude();
         //actualiza en otra clase oyente
         publishBroadcastReceiverGPS();
     }
@@ -269,9 +266,9 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
     }
 
     public Double[] getmCoordinates() {
-        Double[] coordinates=new Double[2];
-        coordinates[0]=mLatitude;
-        coordinates[1]=mLongitude;
+        Double[] coordinates = new Double[2];
+        coordinates[0] = mLatitude;
+        coordinates[1] = mLongitude;
         return coordinates;
     }
 
@@ -290,14 +287,13 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
 
 
     public boolean isCordinatesReady(Context mContext) {
-        if(!cordinatesReady) {
-            if(mPermissions.obtainPermissions())//si ya los permisos estan activos, es un eror de actualizacion
+        if (!cordinatesReady) {
+            if (mPermissions.obtainPermissions())//si ya los permisos estan activos, es un eror de actualizacion
                 Toast.makeText(mContext, R.string.gps_fail, Toast.LENGTH_LONG).show();
 
         }
         return cordinatesReady;
     }
-
 
 
     public void setCordinatesReady(boolean cordinatesReady) {
@@ -406,19 +402,20 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
                 break;*/
         }
     }
-/*
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
-    }
-*/
+
+    /*
+        public void setLatLng(LatLng latLng) {
+            this.latLng = latLng;
+        }
+    */
     public LatLng getLatLng() {
-        return new LatLng(mLatitude,mLongitude);
+        return new LatLng(mLatitude, mLongitude);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(mPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)){
+        if (mPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             //si acepto un permiso especifico, se verifica si a todos estan ready
             startLocationUpdates();//all permission ready?
         }
@@ -454,24 +451,24 @@ public class MyGoogleApiActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState);
     }
 
-    public boolean getLocationManager(){
-        boolean isGPSTrackingEnabled=false;
+    public boolean getLocationManager() {
+        boolean isGPSTrackingEnabled = false;
         try {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean  isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (isGPSEnabled) {
                 isGPSTrackingEnabled = true;
-                myDebug.showLog_d(TAG+"->","Application use GPS Service");
+                myDebug.showLog_d(TAG + "->", "Application use GPS Service");
             } else if (isNetworkEnabled) {
                 isGPSTrackingEnabled = true;
-                myDebug.showLog_d(TAG+"->","Application use Network State to get GPS coordinates");
+                myDebug.showLog_d(TAG + "->", "Application use Network State to get GPS coordinates");
             }
         } catch (Exception e) {
-            myDebug.showLog_e(TAG+"->","Impossible to connect to LocationManager",e);
+            myDebug.showLog_e(TAG + "->", "Impossible to connect to LocationManager", e);
         }
         if (!isGPSTrackingEnabled)
-            myDebug.showLog_d(TAG+"->","GPS OF");
+            myDebug.showLog_d(TAG + "->", "GPS OF");
         return isGPSTrackingEnabled;
     }
 

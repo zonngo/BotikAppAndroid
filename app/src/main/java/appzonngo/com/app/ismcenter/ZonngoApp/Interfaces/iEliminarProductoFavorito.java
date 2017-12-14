@@ -14,5 +14,5 @@ import retrofit2.http.Query;
 public interface iEliminarProductoFavorito {
     @FormUrlEncoded
     @POST("medicine/favorite/delete")
-    Call<MH_DataModel_AddFavorito> EliminarFavorito(@Query("session_id") String session_id,@Field("idProducto") int idproducto);
+    Call<MH_DataModel_AddFavorito> EliminarFavorito(@Query("session_id") String session_id, @Field("idProducto") int idproducto);
 }

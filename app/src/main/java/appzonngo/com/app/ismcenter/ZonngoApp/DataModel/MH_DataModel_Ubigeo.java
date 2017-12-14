@@ -9,7 +9,7 @@ public class MH_DataModel_Ubigeo {
     String name;
     int tipo;
     int parent;
-    boolean rowRelected=false;
+    boolean rowRelected = false;
 
     public int getId() {
         return id;

@@ -1,6 +1,5 @@
 package appzonngo.com.app.ismcenter.ZonngoApp.Interfaces;
 
-import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModelLogin;
 import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_LoginFacebook;
 import retrofit2.Call;
 import retrofit2.http.Field;

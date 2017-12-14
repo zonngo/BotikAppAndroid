@@ -1,4 +1,3 @@
-
 package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 
@@ -74,7 +73,6 @@ public class MH_DataModel_InfoUsuario {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
 
 
 }

@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
                     android:textAlignment="center"
-                    android:text="Líbera tus ideas"
+                    android:text="Compartir"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
                     android:textStyle="bold"/>
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal"
 
-                    android:text="Botikapp al alcance de las personas que realmente la necesitan."
+                    android:text="Nosotros queremos compartir la información que más lo necesitan."
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"

@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#FFF</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#bade40</color>
-    <color name="colorVerde">#bade40</color>
+    <color name="colorAccent">#9bd455</color>
+    <color name="colorVerde">#9bd455</color>
     <color name="colorModal">#e2e5e6</color>
 
     <color name="colorletra">#3F4141</color>

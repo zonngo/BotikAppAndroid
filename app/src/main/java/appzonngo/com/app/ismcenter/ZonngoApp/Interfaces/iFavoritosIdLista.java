@@ -13,5 +13,5 @@ import retrofit2.http.Query;
 
 public interface iFavoritosIdLista {
     @GET("medicine/favorite")
-    Call<List<MH_DataModel_ListarIdfavoritos>>ListarFavorito(@Query("session_id") String session_id);
+    Call<List<MH_DataModel_ListarIdfavoritos>> ListarFavorito(@Query("session_id") String session_id);
 }

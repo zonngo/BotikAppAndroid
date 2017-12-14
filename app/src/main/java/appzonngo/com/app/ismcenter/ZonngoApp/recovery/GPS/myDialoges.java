@@ -14,7 +14,7 @@ import appzonngo.com.app.ismcenter.zonngo2.R;
 public class myDialoges {
     private static ProgressDialog pDialog;
 
-    public static void showProgressDialog(Context myContext, String msg){
+    public static void showProgressDialog(Context myContext, String msg) {
         pDialog = new ProgressDialog(myContext);
         pDialog.setMessage(msg);
         pDialog.setCancelable(true);
@@ -22,8 +22,8 @@ public class myDialoges {
         pDialog.show();
     }
 
-    public static void dismissProgressDialog(){
-        if(pDialog!=null)
+    public static void dismissProgressDialog() {
+        if (pDialog != null)
             pDialog.dismiss();
     }
 
@@ -34,7 +34,8 @@ public class myDialoges {
         alertDialog.setPositiveButton(R.string.gps_config, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                myIntents.ACTION_LOCATION_SOURCE_SETTINGS(myContext);;//pantalla de activacion GPS
+                myIntents.ACTION_LOCATION_SOURCE_SETTINGS(myContext);
+                ;//pantalla de activacion GPS
             }
         });
         alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -45,8 +46,6 @@ public class myDialoges {
         });
         alertDialog.show();
     }
-
-
 
 
 }

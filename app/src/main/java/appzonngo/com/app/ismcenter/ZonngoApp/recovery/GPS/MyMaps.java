@@ -25,26 +25,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_ListarProdByLatLog;
 import appzonngo.com.app.ismcenter.ZonngoApp.recovery.MH_Principal;
 import appzonngo.com.app.ismcenter.zonngo2.R;
-import appzonngo.com.app.ismcenter.ZonngoApp.DataModel.MH_DataModel_ListarProdByLatLog;
 
 /**
  * Created by Marwuin on 24/3/2017.
  */
 
 public class MyMaps {
+    MH_Principal vista;
+    ///libreria nueva
+    ArrayList<LatLng> MarkerPoints;
     private GoogleMap mMap;
     private Marker markerUserPosition;
     private Marker markerPharmacySelected;
-    private DataParser dataParser;
-    MH_Principal vista;
 
     //public static Double latPrueba=-12.065942;
     //public static Double lngPrueba= -77.062849;
+    private DataParser dataParser;
 
-    ///libreria nueva
-    ArrayList<LatLng> MarkerPoints;
     public MyMaps(MH_Principal vista) {
         this.vista = vista;
         MarkerPoints = new ArrayList<>();
@@ -55,86 +55,6 @@ public class MyMaps {
     public GoogleMap getmMap() {
         return mMap;
     }
-
-    public void moveCamera(LatLng latLng){
-        CameraUpdate camUpd1 =
-                CameraUpdateFactory
-                        .newLatLngZoom(latLng, 13);
-        mMap.moveCamera(camUpd1);
-    }
-
-    public void makeUserPosition(LatLng latLng){
-        if (markerUserPosition != null) {
-            markerUserPosition.remove();
-        }
-        markerUserPosition = mMap.addMarker(new MarkerOptions().position(latLng)
-                .title("Mi ubicación")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user)));
-    }
-
-    public void makePharmaciesPosition(List<MH_DataModel_ListarProdByLatLog> listProdFramByLatLng){
-        for(int i=0;i<listProdFramByLatLng.size();i++) {
-            LatLng latLng = new LatLng(listProdFramByLatLng.get(i).getLat(),listProdFramByLatLng.get(i).getLng());
-
-            Log.e("Name Farmacy", ":"+listProdFramByLatLng.get(i).getDetalleFarmacias().getNombre());
-            //if()
-            mMap.addMarker(new MarkerOptions().position(latLng)
-                    .title(listProdFramByLatLng.get(i).getDetalleFarmacias().getNombre())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_pharmacy))
-                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_favorite_border_black_24dp))
-            );
-        }
-    }
-
-    public void makSelectedPharmacyPosition(MH_DataModel_ListarProdByLatLog ProdFramByLatLng){
-        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(),ProdFramByLatLng.getLng());
-        if (markerPharmacySelected != null) {
-            markerPharmacySelected.remove();
-        }
-        markerPharmacySelected = mMap.addMarker(new MarkerOptions().position(latLng)
-                .title(ProdFramByLatLng.getDetalleFarmacias().getNombre())
-                //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_farmacia_ic)));
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        );
-
-
-        //para mostrar el titulo mediante programcion
-        int zoom = (int)mMap.getCameraPosition().zoom;
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom), 4000, null);
-        markerPharmacySelected.showInfoWindow();
-    }
-
-    public void animateCameraPharmacyPosition(MH_DataModel_ListarProdByLatLog ProdFramByLatLng){
-        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(),ProdFramByLatLng.getLng());
-        animateCamera(latLng);
-        //CameraUpdate ubication = CameraUpdateFactory.newLatLngZoom(latLng, 10);
-        //mMap.animateCamera(ubication);
-    }
-
-    public void createRouteToPharmacy(LatLng user, MH_DataModel_ListarProdByLatLog ProdFramByLatLng){
-        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(),ProdFramByLatLng.getLng());
-        // Getting URL to the Google Directions API
-        String url = getUrl(user, latLng);
-        FetchUrl FetchUrl = new FetchUrl();
-        // Start downloading json data from Google Directions API
-        FetchUrl.execute(url);
-        //move map camera
-
-        makSelectedPharmacyPosition(ProdFramByLatLng);
-
-        animateCamera(user);
-    }
-
-    public void animateCameraWithOutZoom(LatLng latLng){
-        CameraUpdate ubication = CameraUpdateFactory.newLatLng(latLng);
-        mMap.animateCamera(ubication);
-    }
-
-    public void animateCamera(LatLng latLng){
-        CameraUpdate ubication = CameraUpdateFactory.newLatLngZoom(latLng, 13);
-        mMap.animateCamera(ubication);
-    }
-
 
     public void setmMap(final GoogleMap mMap) {
         this.mMap = mMap;
@@ -168,6 +88,85 @@ public class MyMaps {
 
             }
         });*/
+    }
+
+    public void moveCamera(LatLng latLng) {
+        CameraUpdate camUpd1 =
+                CameraUpdateFactory
+                        .newLatLngZoom(latLng, 13);
+        mMap.moveCamera(camUpd1);
+    }
+
+    public void makeUserPosition(LatLng latLng) {
+        if (markerUserPosition != null) {
+            markerUserPosition.remove();
+        }
+        markerUserPosition = mMap.addMarker(new MarkerOptions().position(latLng)
+                .title("Mi ubicación")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user)));
+    }
+
+    public void makePharmaciesPosition(List<MH_DataModel_ListarProdByLatLog> listProdFramByLatLng) {
+        for (int i = 0; i < listProdFramByLatLng.size(); i++) {
+            LatLng latLng = new LatLng(listProdFramByLatLng.get(i).getLat(), listProdFramByLatLng.get(i).getLng());
+
+            Log.e("Name Farmacy", ":" + listProdFramByLatLng.get(i).getDetalleFarmacias().getNombre());
+            //if()
+            mMap.addMarker(new MarkerOptions().position(latLng)
+                            .title(listProdFramByLatLng.get(i).getDetalleFarmacias().getNombre())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_pharmacy))
+                    //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_favorite_border_black_24dp))
+            );
+        }
+    }
+
+    public void makSelectedPharmacyPosition(MH_DataModel_ListarProdByLatLog ProdFramByLatLng) {
+        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(), ProdFramByLatLng.getLng());
+        if (markerPharmacySelected != null) {
+            markerPharmacySelected.remove();
+        }
+        markerPharmacySelected = mMap.addMarker(new MarkerOptions().position(latLng)
+                .title(ProdFramByLatLng.getDetalleFarmacias().getNombre())
+                //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_farmacia_ic)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        );
+
+
+        //para mostrar el titulo mediante programcion
+        int zoom = (int) mMap.getCameraPosition().zoom;
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom), 4000, null);
+        markerPharmacySelected.showInfoWindow();
+    }
+
+    public void animateCameraPharmacyPosition(MH_DataModel_ListarProdByLatLog ProdFramByLatLng) {
+        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(), ProdFramByLatLng.getLng());
+        animateCamera(latLng);
+        //CameraUpdate ubication = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+        //mMap.animateCamera(ubication);
+    }
+
+    public void createRouteToPharmacy(LatLng user, MH_DataModel_ListarProdByLatLog ProdFramByLatLng) {
+        LatLng latLng = new LatLng(ProdFramByLatLng.getLat(), ProdFramByLatLng.getLng());
+        // Getting URL to the Google Directions API
+        String url = getUrl(user, latLng);
+        FetchUrl FetchUrl = new FetchUrl();
+        // Start downloading json data from Google Directions API
+        FetchUrl.execute(url);
+        //move map camera
+
+        makSelectedPharmacyPosition(ProdFramByLatLng);
+
+        animateCamera(user);
+    }
+
+    public void animateCameraWithOutZoom(LatLng latLng) {
+        CameraUpdate ubication = CameraUpdateFactory.newLatLng(latLng);
+        mMap.animateCamera(ubication);
+    }
+
+    public void animateCamera(LatLng latLng) {
+        CameraUpdate ubication = CameraUpdateFactory.newLatLngZoom(latLng, 13);
+        mMap.animateCamera(ubication);
     }
 
     public Marker getMarkerUserPosition() {
@@ -295,17 +294,17 @@ public class MyMaps {
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
+                Log.d("ParserTask", jsonData[0].toString());
                 DataParser parser = new DataParser();
                 Log.d("ParserTask", parser.toString());
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
+                Log.d("ParserTask", "Executing routes");
+                Log.d("ParserTask", routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask",e.toString());
+                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routes;
@@ -341,16 +340,15 @@ public class MyMaps {
                 lineOptions.width(6);
                 lineOptions.color(Color.RED);
 
-                Log.d("onPostExecute","onPostExecute lineoptions decoded");
+                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             }
 
             // Drawing polyline in the Google Map for the i-th route
-            if(lineOptions != null) {
+            if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
-            }
-            else {
-                Log.d("onPostExecute","without Polylines drawn");
+            } else {
+                Log.d("onPostExecute", "without Polylines drawn");
             }
         }
     }

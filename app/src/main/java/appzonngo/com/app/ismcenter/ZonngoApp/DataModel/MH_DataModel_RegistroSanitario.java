@@ -1,4 +1,3 @@
-
 package appzonngo.com.app.ismcenter.ZonngoApp.DataModel;
 
 import java.util.HashMap;
@@ -12,54 +11,42 @@ public class MH_DataModel_RegistroSanitario {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The codigo
+     * @return The codigo
      */
     public String getCodigo() {
         return codigo;
     }
 
     /**
-     * 
-     * @param codigo
-     *     The codigo
+     * @param codigo The codigo
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
     /**
-     * 
-     * @return
-     *     The vencimiento
+     * @return The vencimiento
      */
     public String getVencimiento() {
         return vencimiento;
     }
 
     /**
-     * 
-     * @param vencimiento
-     *     The vencimiento
+     * @param vencimiento The vencimiento
      */
     public void setVencimiento(String vencimiento) {
         this.vencimiento = vencimiento;

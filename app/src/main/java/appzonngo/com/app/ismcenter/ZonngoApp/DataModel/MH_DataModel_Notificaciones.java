@@ -23,7 +23,6 @@ public class MH_DataModel_Notificaciones implements Serializable {
     }
 
 
-
     public String getId() {
         return id;
     }

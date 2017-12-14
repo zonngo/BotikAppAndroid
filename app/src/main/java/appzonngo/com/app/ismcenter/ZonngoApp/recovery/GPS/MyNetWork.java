@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 public class MyNetWork {
-    public boolean checkNetworkConnection(Context myContext){
+    public boolean checkNetworkConnection(Context myContext) {
         ConnectivityManager connMgr = (ConnectivityManager) myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         android.net.NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
