@@ -1,21 +1,21 @@
 # BotikAppAndroid
 Android App for BotikApp
 
-# Development Characteristics:
+## Development Characteristics:
 - Android Studio
 -Java
 
-# Lift the Botikapp API
+## Lift the Botikapp API
 - Fill the database of medicines, modify it and connect it according to architecture.
 
-# User systems
+## User systems
 - Connect to your own user system or to Zonngo
 
-# Generate apk 
+## Generate apk 
 - It is allowed to reuse the software within Proprietary Software.
 
-# Firm
+## Firm
 - Sign the app (License X11)
 
-# License
+## License
 MIT
